@@ -1,0 +1,209 @@
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-body">
+                <div id="toolbar" class="row tbRow">
+                    <form id="searchFrom" class="form-inline" method="post">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12">
+                                <div data-options="region:'north',border:false"
+                                     style="height:43px;padding:5px 0px 5px 0px;">
+                                    业务名称:
+                                    <select name="nrt_type" id="inputType" class="easyui-combobox"
+                                            data-options="required:true,editable:false,panelHeight:200"
+                                            style="width:120px;height:34px;">
+                                        <option value="咪咕阅读">咪咕阅读</option>
+                                        <option value="咪咕动漫">咪咕动漫</option>
+                                        <option value="咪咕爱唱">咪咕爱唱</option>
+                                        <option value="咪咕音乐">咪咕音乐</option>
+                                        <option value="咪咕游戏">咪咕游戏</option>
+                                        <option value="灵犀">灵犀</option>
+                                        <option value="139邮箱">139邮箱</option>
+                                        <option value="飞聊">飞聊</option>
+                                        <option value="飞信">飞信</option>
+                                        <option value="和包">和包</option>
+                                        <option value="和冲浪">和冲浪</option>
+                                        <option value="和地图">和地图</option>
+                                        <option value="咪咕视频">咪咕视频</option>
+                                        <option value="移动139导航">移动139导航</option>
+                                        <option value="移动梦网">移动梦网</option>
+                                        <option value="移动手机支付">移动手机支付</option>
+                                    </select>
+                                    地市粒度:
+                                    <select name="nrt_city" id="inputCity" class="easyui-combobox"
+                                            data-options="required:true,editable:false,panelHeight:260"
+                                            style="width:100px;height:34px;">
+                                        <option value="贵州">贵州</option>
+                                        <option value="贵阳">贵阳</option>
+                                        <option value="遵义">遵义</option>
+                                        <option value="安顺">安顺</option>
+                                        <option value="都匀">黔南</option>
+                                        <option value="凯里">黔东南</option>
+                                        <option value="铜仁">铜仁</option>
+                                        <option value="毕节">毕节</option>
+                                        <option value="六盘水">六盘水</option>
+                                        <option value="兴义">黔西南</option>
+                                        <option value="贵安">贵安</option>
+                                    </select>
+                                    时间:<input id="inputStartDay" type="text" class="easyui-datebox"
+                                              data-options="editable:false" value="JavaScript:new Date()"
+                                              style="width:130px;height:34px;">
+                                    <button class="btn btn-default" style="margin: 0px 0px 0px 60px" type="button"
+                                            iconAlign="left" onclick="doSearch()"><i class="fa fa-search"></i>查询
+                                    </button>
+                                    <!-- <button class="btn btn-info " type="button">实时</button>
+                                     <button class="btn btn-warning  " type="button">非实时</button>  -->
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div id="cc" class="easyui-layout" data-options="fit:true,border:false"
+                     style="width: 800px; height:536px;background-color: #fbfbfb;">
+                    <div data-options="region:'center',border:false" style="overflow-x:hidden;overflow-y:hidden">
+                        <table id="diagnTable">
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="mydialog">
+    <div id="receiveModal">
+        <table id="receiveTable" width="100%;">
+
+        </table>
+    </div>
+</div>
+<script>
+
+
+    $(document).ready(function () {
+        /*
+                 getDiagnData();*/
+        setTimeout(function () {
+            doSearch();
+        }, 0);
+
+        $(function () {
+            $('#diagnTable').datagrid({
+                url: '{{projcfg.appurl}}/api/diagn/diagn_route/',
+                method: 'get',
+                rownumbers: true,
+                //autoRowHeight:true,
+                striped: true,
+                fitColumns: false,
+                toolbar: '#toolbar',
+                singleSelect: true,
+                selectOnCheck: false,
+                remoteSort: false,
+                columns: [[
+                    {"field": '_id', hidden: true},
+                    {"field": "dn_createTime", "title": "诊断日期", width: 150, align: 'center', sortable: true,
+                        formatter: function (value) {
+                            return value.substr(0,4)+"年"+value.substr(4,2)+"月"+value.substr(6,2)+"日";
+                        }},
+                    {
+                        "field": "dn_isHandle", "title": "是否定界", width: 80, align: 'center', sortable: true,
+                        formatter: function (value) {
+                            switch (value) {
+                                case '0':
+                                    return '未定界';
+                                    break;
+                                case '1':
+                                    return '已定界';
+                                    break;
+                            }
+                        }
+                    },
+                    {"field": "dn_networkText", "title": "网络情况", width:280, align: 'center', sortable: true},
+                    {"field": "dn_diagnoiseText", "title": "定界结果", width:280, align: 'center', sortable: true},
+                    {"field": "dn_business", "title": "涉及业务", width: 142, align: 'center', sortable: true},
+                    {
+                        "field": "dn_persion", "title": "诊断人", width: 100, align: 'center', sortable: true,
+                        formatter: function (value) {
+                            return value.user_name;
+                        }
+                    }
+                ]],
+
+
+                onDblClickCell: function (index, field, value) {
+                    if(value==0)
+                        value="未定界";
+                    if(value==1)
+                        value="定界";
+
+                    lookUp(value);
+                },
+                onLoadSuccess: function (json) {
+                    if (!json.success) {
+                        msgError(json.msg + ',错误代码:' + json.code);
+                    }
+                },
+                onLoadError: function () {
+                    msgError('加载数据出现时发生错误,请稍候重试...');
+                },
+                pagination: true,
+                loadMsg: '正在加载...'
+            });
+        });
+    });
+
+
+    function getDiagnData() {
+
+
+    }
+
+
+    function doSearch() {
+
+        var city = $('#inputCity').combobox('getValues');
+        var business = $('#inputType').combobox('getValues');
+        var time = $("#inputStartDay").datebox("getValue");
+        var data = [];
+        data.push(city);
+        data.push(business);
+        data.push(time);
+
+        $('#diagnTable').datagrid('reload', {
+            city: city,
+            business: business,
+            time: time
+        });
+
+    }
+    /**
+     * 查看接收人
+     * @returns {boolean}
+     */
+    function lookUp(vv) {
+        $("#receiveTable").append("<div class='before-blueberr'>"+vv+"</div>");
+        //获取滚动条到顶部的垂直高度
+        var scrollHei=$(document).scrollTop();
+        $('#receiveModal').mydialog({
+            title: '详情',
+            width: 200,
+            height: 300,
+            top:scrollHei+100,
+            modal: true,
+            myButtons: [
+                {
+                    text: '关闭',
+                    btnCls: 'btn btn-danger',
+                    handler: function () {
+                        $('#receiveTable').empty();
+                        $('#receiveModal').dialog('close');
+                    }
+                }
+            ]
+        });
+    }
+
+</script>

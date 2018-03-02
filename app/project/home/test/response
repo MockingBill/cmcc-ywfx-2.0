@@ -1,0 +1,219 @@
+null
+{}
+0
+undefined
+WSDL {
+  uri: 'http://10.195.153.236:8085/INAS-SALARM/ws/eastcomSendAlarm?wsdl',
+  callback: [Function],
+  _includesWsdl:
+   [ WSDL {
+       uri: 'http://10.195.153.236:8085/INAS-SALARM/ws/eastcomSendAlarm?wsdl=SendAlarmOrderService.wsdl',
+       callback: [Function],
+       _includesWsdl: [],
+       WSDL_CACHE: [Object],
+       _originalIgnoredNamespaces: [Array],
+       options: [Object],
+       definitions: [Object],
+       xml: '<?xml version=\'1.0\' encoding=\'UTF-8\'?><wsdl:definitions name="SendAlarmOrderService"
+targetNamespace="http://service.webservice.dxsend.eastcom_sw.com/"
+xmlns:ns1="http://service.webservice.dxsend.eastcom_sw.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema">\n  <wsdl:types>\n<xs:schema attributeFormDefault="unqualified"
+elementFormDefault="unqualified" targetNamespace="http://service.webservice.dxsend.eastcom_sw.com/"
+xmlns:tns="http://service.webservice.dxsend.eastcom_sw.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">\n<xs:element
+name="syncSheetState" type="tns:syncSheetState" />\n<xs:element name="syncSheetStateResponse"
+type="tns:syncSheetStateResponse" />\n<xs:complexType name="syncSheetState">\n<xs:sequence>\n<xs:element minOccurs="0"
+name="arg0" type="xs:string" />\n</xs:sequence>\n</xs:complexType>\n<xs:complexType name="syncSheetStateResponse">
+\n<xs:sequence>\n<xs:element minOccurs="0" name="return" type="xs:string" />\n</xs:sequence>\n</xs:complexType>
+\n</xs:schema>\n  </wsdl:types>\n  <wsdl:message name="syncSheetStateResponse">\n    <wsdl:part
+element="ns1:syncSheetStateResponse" name="parameters">\n    </wsdl:part>\n  </wsdl:message>\n  <wsdl:message
+name="syncSheetState">\n    <wsdl:part element="ns1:syncSheetState" name="parameters">\n    </wsdl:part>\n
+</wsdl:message>\n  <wsdl:portType name="SendAlarmOrderService">\n    <wsdl:operation name="syncSheetState">\n
+<wsdl:input message="ns1:syncSheetState" name="syncSheetState">\n    </wsdl:input>\n      <wsdl:output
+message="ns1:syncSheetStateResponse" name="syncSheetStateResponse">\n    </wsdl:output>\n    </wsdl:operation>\n
+</wsdl:portType>\n</wsdl:definitions>',
+       services: {},
+       xmlnsInEnvelope: ' xmlns:ns1="http://service.webservice.dxsend.eastcom_sw.com/"
+xmlns:tns="http://service.webservice.dxsend.eastcom_sw.com/"' } ],
+  WSDL_CACHE:
+   { 'http://10.195.153.236:8085/INAS-SALARM/ws/eastcomSendAlarm?wsdl': [Circular],
+     'http://10.195.153.236:8085/INAS-SALARM/ws/eastcomSendAlarm?wsdl=SendAlarmOrderService.wsdl':
+      WSDL {
+        uri: 'http://10.195.153.236:8085/INAS-SALARM/ws/eastcomSendAlarm?wsdl=SendAlarmOrderService.wsdl',
+        callback: [Function],
+        _includesWsdl: [],
+        WSDL_CACHE: [Circular],
+        _originalIgnoredNamespaces: [Array],
+        options: [Object],
+        definitions: [Object],
+        xml: '<?xml version=\'1.0\' encoding=\'UTF-8\'?><wsdl:definitions name="SendAlarmOrderService"
+targetNamespace="http://service.webservice.dxsend.eastcom_sw.com/"
+xmlns:ns1="http://service.webservice.dxsend.eastcom_sw.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema">\n  <wsdl:types>\n<xs:schema attributeFormDefault="unqualified"
+elementFormDefault="unqualified" targetNamespace="http://service.webservice.dxsend.eastcom_sw.com/"
+xmlns:tns="http://service.webservice.dxsend.eastcom_sw.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">\n<xs:element
+name="syncSheetState" type="tns:syncSheetState" />\n<xs:element name="syncSheetStateResponse"
+type="tns:syncSheetStateResponse" />\n<xs:complexType name="syncSheetState">\n<xs:sequence>\n<xs:element minOccurs="0"
+name="arg0" type="xs:string" />\n</xs:sequence>\n</xs:complexType>\n<xs:complexType name="syncSheetStateResponse">
+\n<xs:sequence>\n<xs:element minOccurs="0" name="return" type="xs:string" />\n</xs:sequence>\n</xs:complexType>
+\n</xs:schema>\n  </wsdl:types>\n  <wsdl:message name="syncSheetStateResponse">\n    <wsdl:part
+element="ns1:syncSheetStateResponse" name="parameters">\n    </wsdl:part>\n  </wsdl:message>\n  <wsdl:message
+name="syncSheetState">\n    <wsdl:part element="ns1:syncSheetState" name="parameters">\n    </wsdl:part>\n
+</wsdl:message>\n  <wsdl:portType name="SendAlarmOrderService">\n    <wsdl:operation name="syncSheetState">\n
+<wsdl:input message="ns1:syncSheetState" name="syncSheetState">\n    </wsdl:input>\n      <wsdl:output
+message="ns1:syncSheetStateResponse" name="syncSheetStateResponse">\n    </wsdl:output>\n    </wsdl:operation>\n
+</wsdl:portType>\n</wsdl:definitions>',
+        services: {},
+        xmlnsInEnvelope: ' xmlns:ns1="http://service.webservice.dxsend.eastcom_sw.com/"
+xmlns:tns="http://service.webservice.dxsend.eastcom_sw.com/"' } },
+  _originalIgnoredNamespaces: undefined,
+  options:
+   { ignoredNamespaces: [ 'tns', 'targetNamespace', 'typedNamespace' ],
+     valueKey: '$value',
+     xmlKey: '$xml',
+     escapeXML: true,
+     returnFault: false,
+     handleNilAsNull: false,
+     wsdl_headers: undefined,
+     wsdl_options: undefined,
+     ignoreBaseNameSpaces: false,
+     forceSoap12Headers: false,
+     customDeserializer: undefined,
+     useEmptyTag: false,
+     attributesKey: 'attributes',
+     envelopeKey: 'soap',
+     preserveWhitespace: false },
+  definitions:
+   subElement {
+     xmlns:
+      { ns1: 'http://service.webservice.dxsend.eastcom_sw.com/',
+        ns2: 'http://cxf.apache.org/bindings/xformat',
+        soap: 'http://schemas.xmlsoap.org/wsdl/soap/',
+        tns: 'http://service.webservice.dxsend.eastcom_sw.com/',
+        wsdl: 'http://schemas.xmlsoap.org/wsdl/',
+        xsd: 'http://www.w3.org/2001/XMLSchema',
+        __tns__: 'http://service.webservice.dxsend.eastcom_sw.com/',
+        xs: 'http://www.w3.org/2001/XMLSchema' },
+     valueKey: '$value',
+     xmlKey: '$xml',
+     ignoredNamespaces: [ 'tns', 'targetNamespace', 'typedNamespace' ],
+     '$name': 'SendAlarmOrderService',
+     '$targetNamespace': 'http://service.webservice.dxsend.eastcom_sw.com/',
+     messages: { syncSheetStateResponse: [Object], syncSheetState: [Object] },
+     portTypes: { SendAlarmOrderService: [Object] },
+     bindings: { SendAlarmOrderServiceImplServiceSoapBinding: [Object] },
+     services: { SendAlarmOrderServiceImplService: [Object] },
+     schemas: { 'http://service.webservice.dxsend.eastcom_sw.com/': [Object] },
+     descriptions: { types: {} } },
+  xml: '<?xml version=\'1.0\' encoding=\'UTF-8\'?><wsdl:definitions name="SendAlarmOrderServiceImplService"
+targetNamespace="http://oms.impl.service.webservice.dxsend.eastcom_sw.com/"
+xmlns:ns1="http://service.webservice.dxsend.eastcom_sw.com/" xmlns:ns2="http://cxf.apache.org/bindings/xformat"
+xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://oms.impl.service.webservice.dxsend.eastcom_sw.com/"
+xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">\n  <wsdl:import
+location="http://10.195.153.236:8085/INAS-SALARM/ws/eastcomSendAlarm?wsdl=SendAlarmOrderService.wsdl"
+namespace="http://service.webservice.dxsend.eastcom_sw.com/">\n    </wsdl:import>\n  <wsdl:binding
+name="SendAlarmOrderServiceImplServiceSoapBinding" type="ns1:SendAlarmOrderService">\n    <soap:binding style="document"
+transport="http://schemas.xmlsoap.org/soap/http" />\n    <wsdl:operation name="syncSheetState">\n      <soap:operation
+soapAction="" style="document" />\n      <wsdl:input name="syncSheetState">\n        <soap:body use="literal" />\n
+</wsdl:input>\n      <wsdl:output name="syncSheetStateResponse">\n        <soap:body use="literal" />\n
+</wsdl:output>\n    </wsdl:operation>\n  </wsdl:binding>\n  <wsdl:service name="SendAlarmOrderServiceImplService">\n
+<wsdl:port binding="tns:SendAlarmOrderServiceImplServiceSoapBinding" name="SendAlarmOrderServiceImplPort">\n
+<soap:address location="http://10.195.153.236:8085/INAS-SALARM/ws/eastcomSendAlarm" />\n    </wsdl:port>\n
+</wsdl:service>\n</wsdl:definitions>',
+  services:
+   { SendAlarmOrderServiceImplService:
+      subElement {
+        valueKey: '$value',
+        xmlKey: '$xml',
+        ignoredNamespaces: [Array],
+        ports: [Object] } },
+  xmlnsInEnvelope: ' xmlns:ns1="http://service.webservice.dxsend.eastcom_sw.com/"
+xmlns:ns2="http://cxf.apache.org/bindings/xformat" xmlns:tns="http://service.webservice.dxsend.eastcom_sw.com/"' }
+undefined
+undefined
+[Function]
+{ SendAlarmOrderServiceImplPort: { syncSheetState: [Function] } }
+HttpClient {
+  _request:
+   { [Function: request]
+     get: [Function],
+     head: [Function],
+     options: [Function],
+     post: [Function],
+     put: [Function],
+     patch: [Function],
+     del: [Function],
+     delete: [Function],
+     jar: [Function],
+     cookie: [Function],
+     defaults: [Function],
+     forever: [Function],
+     Request:
+      { [Function: Request]
+        super_: [Object],
+        debug: undefined,
+        defaultProxyHeaderWhiteList: [Array],
+        defaultProxyHeaderExclusiveList: [Array] },
+     initParams: [Function: initParams],
+     debug: [Getter/Setter] } }
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function: ret]
+[Function]
+[Function]
+[Function]
+[Function]
+[Function]
+[Function]
+[Function]
+[Function]
+[Function]
+[Function]
+[Function]
+[Function]
+[Function]
+[Function]
+[Function]
+[Function]
+[Function]
+[Function]
+[Function]
+[Function]
+[Function: setMaxListeners]
+[Function: getMaxListeners]
+[Function: emit]
+[Function: addListener]
+[Function: addListener]
+[Function: prependListener]
+[Function: once]
+[Function: prependOnceListener]
+[Function: removeListener]
+[Function: removeAllListeners]
+[Function: listeners]
+[Function: listenerCount]
+[Function: eventNames]
+

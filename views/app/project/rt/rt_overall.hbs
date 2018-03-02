@@ -1,0 +1,1337 @@
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-body">
+                <div id="cc" class="easyui-layout" data-options="fit:true,border:false" style="width: 800px; height:536px;background-color: #fbfbfb;">
+                    <div data-options="region:'center',border:false" style="overflow-x:hidden;overflow-y:hidden">
+                        <div id="tt" class="easyui-tabs" style="height:536px" data-options="tabPosition:'left',headerWidth:80">
+                            <div title="贵州" data-options="closable:true" style="padding:10px;">
+                                <table id="daytable_gz">
+                                </table>
+                            </div>
+                            <div title="贵阳" data-options="closable:true" style="padding:10px">
+                                <table id="daytable_gy">
+                                </table>
+                            </div>
+                            <div title="遵义" data-options="closable:true" style="padding:10px">
+                                <table id="daytable_zy">
+                                </table>
+                            </div>
+                            <div title="安顺" data-options="closable:true" style="padding:10px">
+                                <table id="daytable_as">
+                                </table>
+                            </div>
+                            <div title="黔南" data-options="closable:true" style="padding:10px">
+                                <table id="daytable_qn">
+                                </table>
+                            </div>
+                            <div title="黔东南" data-options="closable:true" style="padding:10px">
+                                <table id="daytable_qdn">
+                                </table>
+                            </div>
+                            <div title="铜仁" data-options="closable:true" style="padding:10px">
+                                <table id="daytable_tr">
+                                </table>
+                            </div>
+                            <div title="毕节" data-options="closable:true" style="padding:10px">
+                                <table id="daytable_bj">
+                                </table>
+                            </div>
+                            <div title="六盘水" data-options="closable:true" style="padding:10px">
+                                <table id="daytable_lps">
+                                </table>
+                            </div>
+                            <div title="黔西南" data-options="closable:true" style="padding:10px">
+                                <table id="daytable_qxn">
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="mydialog">
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <form id="studentForm" class="form-horizontal form-bordered" role="form">
+                    <div class="form-group">
+                        <label for="inputNo" class="col-sm-2 control-label no-padding-right">工号</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="easyui-validatebox form-control" data-options="required:true" style="width:60%" name="stu_no" id="inputNo" placeholder="请输入工号">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputName" class="col-sm-2 control-label no-padding-right">姓名</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="easyui-validatebox form-control" data-options="required:true" style="width:60%" name="stu_name" id="inputName" placeholder="请输入姓名">
+                            <input type="hidden" name="_id" id="inputId">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputMobile" class="col-sm-2 control-label no-padding-right">手机</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="easyui-validatebox form-control" data-options="required:true" style="width:60%" name="stu_mobile" id="inputMobile" placeholder="请输入手机号码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSex" class="col-sm-2 control-label no-padding-right">性别</label>
+                        <div class="col-sm-9">
+                            <select  name="stu_sex" id="inputSex" class="easyui-combobox" data-options="required:true,editable:false,panelHeight:50" style="width:70px;height:34px;">
+                                <option value="1">男</option>
+                                <option value="0">女</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAge" class="col-sm-2 control-label no-padding-right">年龄</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="easyui-validatebox form-control" data-options="required:true" name="stu_age" id="inputAge" placeholder="请输入年龄" style="width:40%">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputStatus" class="col-sm-2 control-label no-padding-right">状态</label>
+                        <div class="col-sm-9">
+                            <select  name="stu_status" id="inputStatus" class="easyui-combobox" data-options="required:true,editable:false,panelHeight:50" style="width:70px;height:34px;">
+                                <option value="1">在职</option>
+                                <option value="0">离职</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    // 关闭窗口
+    function closeDialog() {
+        $('#myModal').dialog('close');
+        clear();
+    }
+    // 打开页面
+    function openPage(title, value, callback) {
+        $('#myModal').show();
+        $('#myModal').mydialog({
+            title:title,
+            width: 700,
+            height: 500,
+            top:100,
+            modal: true,
+            myButtons:[
+                {
+                    text:'确定',
+                    btnCls:'btn btn-blue',
+                    handler:function(){
+                        callback(value);
+                    }
+                },
+                {
+                    text:'关闭',
+                    btnCls:'btn btn-danger',
+                    handler:function(){
+                        closeDialog();
+                    }
+                }
+            ]
+        });
+    }
+    $(document).ready(function() {
+        $(function(){
+            $('#daytable_gz').datagrid({
+                url:'{{projcfg.appurl}}/api/rt/rt_route/eui',
+//                data:{page:1,length:10},
+                method:'get',
+                rownumbers:false,
+                height:400,
+                striped:true,
+                showHeader:false,
+                columns:[[
+                    {"field": '_id', hidden: true},
+                    {"field": "rt_bizname",align: 'center',width:90,
+                        formatter: function (value, rowData, rowIndex) {
+                            if( new Date().getMinutes() < 10){
+                                var starttime = new Date().getHours() + ':0' + new Date().getMinutes();
+                            }else{
+                                var starttime = new Date().getHours() + ':' + new Date().getMinutes();
+                            }
+                            return '<div style="height:15px;"></div><span style="font-weight:bold;">' + value + '</span>' + '<br>' + '<span style="font-size:10px;color: #0066ff;">' + starttime + '</span><div style="height:10px;"></div>';
+                        }
+                    },
+                    {"field": "rt_httpsuccrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTT成功率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '%'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                                if( index % 2 == 0){
+                                    return 'background-color:#f7f7f7;';
+                                }else{
+                                    return 'background-color:#d4f2ff;';
+                                }
+                        }
+                    },
+                    {"field": "rt_httpavgresptime",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTP平均时延<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'ms'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_httpdlrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下载速率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'kbps'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_ultraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '上行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_dltraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_activeusernbr",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '用户数<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '人'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    }
+
+                ]],
+                onDblClickRow:function(rowIndex, rowData){
+                    //doEdit(1,rowIndex,rowData);
+                },
+                onLoadSuccess:function(json) {
+                    if(!json.success) {
+                        msgError(json.msg + ',错误代码:' + json.code);
+                    }
+                },
+                onLoadError:function() {
+                    msgError('加载数据出现时发生错误,请稍候重试...');
+                },
+                pagination:false,
+                loadMsg:'正在加载...'
+            });
+            $('#daytable_gy').datagrid({
+                url:'{{projcfg.appurl}}/api/rt/rt_route/gy',
+                method:'get',
+                rownumbers:false,
+                //striped:true,
+                showHeader:false,
+                columns:[[
+                    {"field": '_id', hidden: true},
+                    {"field": "rt_bizname",align: 'center',width:90,
+                        formatter: function (value, rowData, rowIndex) {
+                            if( new Date().getMinutes() < 10){
+                                var starttime = new Date().getHours() + ':0' + new Date().getMinutes();
+                            }else{
+                                var starttime = new Date().getHours() + ':' + new Date().getMinutes();
+                            }
+                            return '<div style="height:15px;"></div><span style="font-weight:bold;">' + value + '</span>' + '<br>' + '<span style="font-size:10px;color: #0066ff;">' + starttime + '</span><div style="height:10px;"></div>';
+                        }
+                    },
+                    {"field": "rt_httpsuccrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTT成功率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '%'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_httpavgresptime",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTP平均时延<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'ms'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_httpdlrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下载速率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'kbps'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_ultraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '上行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_dltraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_activeusernbr",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '用户数<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '人'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    }
+
+                ]],
+                onDblClickRow:function(rowIndex, rowData){
+                    //doEdit(1,rowIndex,rowData);
+                },
+                onLoadSuccess:function(json) {
+                    if(!json.success) {
+                        msgError(json.msg + ',错误代码:' + json.code);
+                    }
+                },
+                onLoadError:function() {
+                    msgError('加载数据出现时发生错误,请稍候重试...');
+                },
+                pagination:false,
+                loadMsg:'正在加载...'
+            });
+            $('#daytable_zy').datagrid({
+                url:'{{projcfg.appurl}}/api/rt/rt_route/zy',
+                method:'get',
+                rownumbers:false,
+                //striped:true,
+                showHeader:false,
+                columns:[[
+                    {"field": '_id', hidden: true},
+                    {"field": "rt_bizname",align: 'center',width:90,
+                        formatter: function (value, rowData, rowIndex) {
+                            if( new Date().getMinutes() < 10){
+                                var starttime = new Date().getHours() + ':0' + new Date().getMinutes();
+                            }else{
+                                var starttime = new Date().getHours() + ':' + new Date().getMinutes();
+                            }
+                            return '<div style="height:15px;"></div><span style="font-weight:bold;">' + value + '</span>' + '<br>' + '<span style="font-size:10px;color: #0066ff;">' + starttime + '</span><div style="height:10px;"></div>';
+                        }
+                    },
+                    {"field": "rt_httpsuccrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTT成功率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '%'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_httpavgresptime",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTP平均时延<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'ms'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_httpdlrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下载速率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'kbps'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_ultraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '上行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_dltraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_activeusernbr",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '用户数<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '人'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    }
+
+                ]],
+                onDblClickRow:function(rowIndex, rowData){
+                    //doEdit(1,rowIndex,rowData);
+                },
+                onLoadSuccess:function(json) {
+                    if(!json.success) {
+                        msgError(json.msg + ',错误代码:' + json.code);
+                    }
+                },
+                onLoadError:function() {
+                    msgError('加载数据出现时发生错误,请稍候重试...');
+                },
+                pagination:false,
+                loadMsg:'正在加载...'
+            });
+            $('#daytable_as').datagrid({
+                url:'{{projcfg.appurl}}/api/rt/rt_route/as',
+                method:'get',
+                rownumbers:false,
+                //striped:true,
+                showHeader:false,
+                columns:[[
+                    {"field": '_id', hidden: true},
+                    {"field": "rt_bizname",align: 'center',width:90,
+                        formatter: function (value, rowData, rowIndex) {
+                            if( new Date().getMinutes() < 10){
+                                var starttime = new Date().getHours() + ':0' + new Date().getMinutes();
+                            }else{
+                                var starttime = new Date().getHours() + ':' + new Date().getMinutes();
+                            }
+                            return '<div style="height:15px;"></div><span style="font-weight:bold;">' + value + '</span>' + '<br>' + '<span style="font-size:10px;color: #0066ff;">' + starttime + '</span><div style="height:10px;"></div>';
+                        }
+                    },
+                    {"field": "rt_httpsuccrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTT成功率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '%'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_httpavgresptime",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTP平均时延<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'ms'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_httpdlrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下载速率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'kbps'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_ultraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '上行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_dltraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_activeusernbr",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '用户数<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '人'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    }
+
+                ]],
+                onDblClickRow:function(rowIndex, rowData){
+                    //doEdit(1,rowIndex,rowData);
+                },
+                onLoadSuccess:function(json) {
+                    if(!json.success) {
+                        msgError(json.msg + ',错误代码:' + json.code);
+                    }
+                },
+                onLoadError:function() {
+                    msgError('加载数据出现时发生错误,请稍候重试...');
+                },
+                pagination:false,
+                loadMsg:'正在加载...'
+            });
+            $('#daytable_qn').datagrid({
+                url:'{{projcfg.appurl}}/api/rt/rt_route/qn',
+                method:'get',
+                rownumbers:false,
+                //striped:true,
+                showHeader:false,
+                columns:[[
+                    {"field": '_id', hidden: true},
+                    {"field": "rt_bizname",align: 'center',width:90,
+                        formatter: function (value, rowData, rowIndex) {
+                            if( new Date().getMinutes() < 10){
+                                var starttime = new Date().getHours() + ':0' + new Date().getMinutes();
+                            }else{
+                                var starttime = new Date().getHours() + ':' + new Date().getMinutes();
+                            }
+                            return '<div style="height:15px;"></div><span style="font-weight:bold;">' + value + '</span>' + '<br>' + '<span style="font-size:10px;color: #0066ff;">' + starttime + '</span><div style="height:10px;"></div>';
+                        }
+                    },
+                    {"field": "rt_httpsuccrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTT成功率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '%'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_httpavgresptime",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTP平均时延<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'ms'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_httpdlrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下载速率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'kbps'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_ultraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '上行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_dltraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_activeusernbr",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '用户数<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '人'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    }
+
+                ]],
+                onDblClickRow:function(rowIndex, rowData){
+                    //doEdit(1,rowIndex,rowData);
+                },
+                onLoadSuccess:function(json) {
+                    if(!json.success) {
+                        msgError(json.msg + ',错误代码:' + json.code);
+                    }
+                },
+                onLoadError:function() {
+                    msgError('加载数据出现时发生错误,请稍候重试...');
+                },
+                pagination:false,
+                loadMsg:'正在加载...'
+            });
+            $('#daytable_qdn').datagrid({
+                url:'{{projcfg.appurl}}/api/rt/rt_route/qdn',
+                method:'get',
+                rownumbers:false,
+                //striped:true,
+                showHeader:false,
+                columns:[[
+                    {"field": '_id', hidden: true},
+                    {"field": "rt_bizname",align: 'center',width:90,
+                        formatter: function (value, rowData, rowIndex) {
+                            if( new Date().getMinutes() < 10){
+                                var starttime = new Date().getHours() + ':0' + new Date().getMinutes();
+                            }else{
+                                var starttime = new Date().getHours() + ':' + new Date().getMinutes();
+                            }
+                            return '<div style="height:15px;"></div><span style="font-weight:bold;">' + value + '</span>' + '<br>' + '<span style="font-size:10px;color: #0066ff;">' + starttime + '</span><div style="height:10px;"></div>';
+                        }
+                    },
+                    {"field": "rt_httpsuccrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTT成功率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '%'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_httpavgresptime",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTP平均时延<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'ms'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_httpdlrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下载速率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'kbps'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_ultraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '上行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_dltraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_activeusernbr",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '用户数<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '人'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    }
+
+                ]],
+                onDblClickRow:function(rowIndex, rowData){
+                    //doEdit(1,rowIndex,rowData);
+                },
+                onLoadSuccess:function(json) {
+                    if(!json.success) {
+                        msgError(json.msg + ',错误代码:' + json.code);
+                    }
+                },
+                onLoadError:function() {
+                    msgError('加载数据出现时发生错误,请稍候重试...');
+                },
+                pagination:false,
+                loadMsg:'正在加载...'
+            });
+            $('#daytable_tr').datagrid({
+                url:'{{projcfg.appurl}}/api/rt/rt_route/tr',
+                method:'get',
+                rownumbers:false,
+                //striped:true,
+                showHeader:false,
+                columns:[[
+                    {"field": '_id', hidden: true},
+                    {"field": "rt_bizname",align: 'center',width:90,
+                        formatter: function (value, rowData, rowIndex) {
+                            if( new Date().getMinutes() < 10){
+                                var starttime = new Date().getHours() + ':0' + new Date().getMinutes();
+                            }else{
+                                var starttime = new Date().getHours() + ':' + new Date().getMinutes();
+                            }
+                            return '<div style="height:15px;"></div><span style="font-weight:bold;">' + value + '</span>' + '<br>' + '<span style="font-size:10px;color: #0066ff;">' + starttime + '</span><div style="height:10px;"></div>';
+                        }
+                    },
+                    {"field": "rt_httpsuccrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTT成功率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '%'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_httpavgresptime",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTP平均时延<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'ms'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_httpdlrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下载速率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'kbps'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_ultraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '上行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_dltraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_activeusernbr",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '用户数<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '人'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    }
+
+                ]],
+                onDblClickRow:function(rowIndex, rowData){
+                    //doEdit(1,rowIndex,rowData);
+                },
+                onLoadSuccess:function(json) {
+                    if(!json.success) {
+                        msgError(json.msg + ',错误代码:' + json.code);
+                    }
+                },
+                onLoadError:function() {
+                    msgError('加载数据出现时发生错误,请稍候重试...');
+                },
+                pagination:false,
+                loadMsg:'正在加载...'
+            });
+            $('#daytable_bj').datagrid({
+                url:'{{projcfg.appurl}}/api/rt/rt_route/bj',
+                method:'get',
+                rownumbers:false,
+                //striped:true,
+                showHeader:false,
+                columns:[[
+                    {"field": '_id', hidden: true},
+                    {"field": "rt_bizname",align: 'center',width:90,
+                        formatter: function (value, rowData, rowIndex) {
+                            if( new Date().getMinutes() < 10){
+                                var starttime = new Date().getHours() + ':0' + new Date().getMinutes();
+                            }else{
+                                var starttime = new Date().getHours() + ':' + new Date().getMinutes();
+                            }
+                            return '<div style="height:15px;"></div><span style="font-weight:bold;">' + value + '</span>' + '<br>' + '<span style="font-size:10px;color: #0066ff;">' + starttime + '</span><div style="height:10px;"></div>';
+                        }
+                    },
+                    {"field": "rt_httpsuccrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTT成功率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '%'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_httpavgresptime",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTP平均时延<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'ms'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_httpdlrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下载速率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'kbps'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_ultraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '上行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_dltraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_activeusernbr",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '用户数<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '人'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    }
+
+                ]],
+                onDblClickRow:function(rowIndex, rowData){
+                    //doEdit(1,rowIndex,rowData);
+                },
+                onLoadSuccess:function(json) {
+                    if(!json.success) {
+                        msgError(json.msg + ',错误代码:' + json.code);
+                    }
+                },
+                onLoadError:function() {
+                    msgError('加载数据出现时发生错误,请稍候重试...');
+                },
+                pagination:false,
+                loadMsg:'正在加载...'
+            });
+            $('#daytable_lps').datagrid({
+                url:'{{projcfg.appurl}}/api/rt/rt_route/lps',
+                method:'get',
+                rownumbers:false,
+                //striped:true,
+                showHeader:false,
+                columns:[[
+                    {"field": '_id', hidden: true},
+                    {"field": "rt_bizname",align: 'center',width:90,
+                        formatter: function (value, rowData, rowIndex) {
+                            if( new Date().getMinutes() < 10){
+                                var starttime = new Date().getHours() + ':0' + new Date().getMinutes();
+                            }else{
+                                var starttime = new Date().getHours() + ':' + new Date().getMinutes();
+                            }
+                            return '<div style="height:15px;"></div><span style="font-weight:bold;">' + value + '</span>' + '<br>' + '<span style="font-size:10px;color: #0066ff;">' + starttime + '</span><div style="height:10px;"></div>';
+                        }
+                    },
+                    {"field": "rt_httpsuccrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTT成功率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '%'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_httpavgresptime",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTP平均时延<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'ms'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_httpdlrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下载速率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'kbps'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_ultraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '上行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_dltraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_activeusernbr",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '用户数<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '人'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    }
+
+                ]],
+                onDblClickRow:function(rowIndex, rowData){
+                    //doEdit(1,rowIndex,rowData);
+                },
+                onLoadSuccess:function(json) {
+                    if(!json.success) {
+                        msgError(json.msg + ',错误代码:' + json.code);
+                    }
+                },
+                onLoadError:function() {
+                    msgError('加载数据出现时发生错误,请稍候重试...');
+                },
+                pagination:false,
+                loadMsg:'正在加载...'
+            });
+            $('#daytable_qxn').datagrid({
+                url:'{{projcfg.appurl}}/api/rt/rt_route/qxn',
+                method:'get',
+                rownumbers:false,
+                //striped:true,
+                showHeader:false,
+                columns:[[
+                    {"field": '_id', hidden: true},
+                    {"field": "rt_bizname",align: 'center',width:90,
+                        formatter: function (value, rowData, rowIndex) {
+                            if( new Date().getMinutes() < 10){
+                                var starttime = new Date().getHours() + ':0' + new Date().getMinutes();
+                            }else{
+                                var starttime = new Date().getHours() + ':' + new Date().getMinutes();
+                            }
+                            return '<div style="height:15px;"></div><span style="font-weight:bold;">' + value + '</span>' + '<br>' + '<span style="font-size:10px;color: #0066ff;">' + starttime + '</span><div style="height:10px;"></div>';
+                        }
+                    },
+                    {"field": "rt_httpsuccrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTT成功率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '%'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_httpavgresptime",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + 'HTTP平均时延<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'ms'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_httpdlrate",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下载速率<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value+ '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'kbps'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_ultraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '上行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    },
+                    {"field": "rt_dltraffic",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '下行流量<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + (value/1024/1024/1024).toFixed(2) + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + 'GB'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#f7f7f7;';
+                            }else{
+                                return 'background-color:#d4f2ff;';
+                            }
+                        }
+                    },
+                    {"field": "rt_activeusernbr",align: 'center',width:145,
+                        formatter: function (value, rowData, rowIndex) {
+                            return '<span style="font-size:10px;">' + '用户数<br>' + '</span>' + '<span style="font-size:20px;font-weight:bold;color:#3c65a3;">' + value + '</span>' + '<span style="font-size:20px;font-weight:bold;color:black;">' + '人'+ '</span>';
+                        },
+                        styler: function (value, row, index) {
+                            if( index % 2 == 0){
+                                return 'background-color:#d4f2ff;';
+                            }else{
+                                return 'background-color:#f7f7f7;';
+                            }
+                        }
+                    }
+
+                ]],
+                onDblClickRow:function(rowIndex, rowData){
+                    //doEdit(1,rowIndex,rowData);
+                },
+                onLoadSuccess:function(json) {
+                    if(!json.success) {
+                        msgError(json.msg + ',错误代码:' + json.code);
+                    }
+                },
+                onLoadError:function() {
+                    msgError('加载数据出现时发生错误,请稍候重试...');
+                },
+                pagination:false,
+                loadMsg:'正在加载...'
+            });
+        });
+    });
+    function doSearch() {
+        $('#simpledatatable').datagrid('reload',{'name':$('#sname').val()});
+    }
+    function doClear() {
+        $('#sname').val('');
+        doSearch();
+    }
+    // 新增数据
+    function doAdd(value) {//alert($('#studentForm').serializeJson());
+
+        // 验证表单
+        var validate = $('#studentForm').form('validate');
+        if(!validate) {
+            return false;
+        }
+        $.ajax({
+            url: '{{projcfg.appurl}}/api/demo/student',
+            type: 'post',
+            data: $('#studentForm').serializeJson(),
+            success: function (data) {
+                if(data.success) {
+                    msgSuccess(data.msg);
+                    closeDialog();
+                    doSearch();
+                }
+                else {
+                    msgError(data.msg+',错误代码:'+data.code);
+                }
+            }
+        });
+    }
+
+    // 打开修改页面
+    function toEdit() {
+
+        // 获得选择行
+        var rows = $('#simpledatatable').datagrid('getChecked');
+        if (rows.length != 1) {
+            msgError('提示,请选择一条数据再进行修改');
+            return false;
+        }
+        var id = rows[0]._id;
+        openPage("修改数据", id, doEdit);
+        // 获取远程数据
+        $.ajax({
+            url: '{{projcfg.appurl}}/api/demo/student/'+id,
+            type: 'get',
+            data: {
+
+            }, success: function (data) {
+                if(data.success) {
+                    $('#studentForm').form('load',data.data[0]);
+                }
+                else {
+                    msgError(data.msg+',错误代码:'+data.code);
+                }
+            }
+        });
+    }
+    // 修改数据
+    function doEdit(value) {
+
+        // 验证表单
+        var validate = $('#studentForm').form('validate');
+        if(!validate) {
+            return false;
+        }
+
+        $.ajax({
+            url: '{{projcfg.appurl}}/api/demo/student/'+value,
+            type: 'put',
+            data: $('#studentForm').serializeJson(),
+            success: function (data) {
+                if(data.success) {
+                    msgSuccess(data.msg);
+                    closeDialog();
+                    doSearch();
+                    clear();
+                }
+                else {
+                    msgError(data.msg+',错误代码:'+data.code);
+                }
+            }
+        });
+    }
+    // 删除数据
+    function doDel() {
+
+        // 获得选择行
+        var rows = $('#simpledatatable').datagrid('getChecked');
+        if (rows.length != 1) {
+            msgError('提示,请选择一条数据再进行删除');
+            return false;
+        }
+        var id = rows[0]._id;
+
+        msgConfirm('确定删除此条记录？',function(result){
+            if(result){
+                // 获取远程数据
+                $.ajax({
+                    url: '{{projcfg.appurl}}/api/demo/student/'+id,
+                    type: 'delete',
+                    data: {
+                    },
+                    success: function (data) {
+                        if(data.success) {
+                            msgSuccess(data.msg);
+                            doSearch();
+                        }
+                        else {
+                            msgError(data.msg+',错误代码:'+data.code);
+                        }
+                    }
+                });
+            }
+        });
+    }
+    // 清空新增表单数据
+    function clear() {
+        $('#studentForm').form('clear');
+    }
+    function myrefresh()
+    {
+        window.location.reload();
+    }
+    setTimeout('myrefresh()',300000);
+
+</script>

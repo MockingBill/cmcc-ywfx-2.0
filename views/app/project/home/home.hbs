@@ -1,0 +1,1128 @@
+<!--create bu dengqian-->
+
+<!--Flot Charts Needed Scripts-->
+<script src="{{projcfg.appurl}}/static/js/fontJquery/jquery.flot.js"></script>
+<script src="{{projcfg.appurl}}/static/js/fontJquery/jquery.flot.resize.js"></script>
+<script src="{{projcfg.appurl}}/static/js/fontJquery/jquery.flot.pie.js"></script>
+<script src="{{projcfg.appurl}}/static/js/fontJquery/jquery.flot.tooltip.js"></script>
+<script src="{{projcfg.appurl}}/static/js/fontJquery/jquery.flot.orderBars.js"></script>
+
+<style>
+    .mySpan {
+        font-size: large;
+        color: white;
+        font-weight: bold;
+        padding-left: 20px;
+    }
+</style>
+<!--页面功能区-->
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-body">
+                <div id="cc" class="easyui-layout" data-options="fit:true,border:true"
+                     style="width: 1050.99px; height:650px;background-color: #f3eff3;">
+                    <!--650-->
+                    <div data-options="region:'center',border:false" style="overflow-x:hidden;overflow-y:hidden">
+                        <div id="toolbar" class="row tbRow">
+                            <div class="col-xs-8 col-md-8 text-left">
+                                <form id="searchFrom" class="form-inline">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input class="easyui-combobox" value="地区选择"
+                                                   style="width: 130px;height:34px;"
+                                                   name="rt_bizcity" id="rt_bizcity"
+                                                   data-options='data:[{id:"贵州",text:"贵州"},
+                                                   {id:"贵阳",text:"贵阳"},
+                                                   {id:"遵义",text:"遵义"},
+                                                   {id:"贵安新区",text:"贵安新区"},
+                                                   {id:"安顺",text:"安顺"},
+                                                   {id:"都匀",text:"都匀"},
+                                                   {id:"凯里",text:"凯里"},
+                                                   {id:"铜仁",text:"铜仁"},
+                                                   {id:"毕节",text:"毕节"},
+                                                   {id:"六盘水",text:"六盘水"},
+                                                   {id:"兴义",text:"兴义"},],
+                                                   valueField: "id",
+                                                   textField: "text",
+                                                   panelWidth: 130,
+                                                   panelHeight: "auto",
+                                                   formatter: formatItem'>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input class="easyui-combobox" value="自有业务选择"
+                                                   style="width: 130px;height:34px;"
+                                                   name="ownRt_bizname" id="ownRt_bizname"
+                                                   data-options='data:[
+                                                   {id:"咪咕音乐",text:"咪咕音乐"},
+                                                   {id:"咪咕动漫",text:"咪咕动漫"},
+                                                   {id:"咪咕阅读",text:"咪咕阅读"},
+                                                   {id:"灵犀",text:"灵犀"},
+                                                   {id:"咪咕游戏",text:"咪咕游戏"},],
+                                                   valueField: "id",
+                                                   textField: "text",
+                                                   panelWidth: 130,
+                                                   panelHeight: "auto",
+                                                   formatter: formatItem
+                                                    '>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input class="easyui-combobox" value="竞对业务选择"
+                                                   style="width: 130px;height:34px;"
+                                                   name="otherRt_bizname" id="otherRt_bizname"
+                                                   data-options=''>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input class="easyui-datebox" id="queryDate" name="queryDate" value="查询日期"
+                                                   style="width: 130px;height:34px;">
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="col-xs-4 col-md-4 text-right">
+                                <span class="input-group-btn">
+                                    <div class="btn-group">
+                                        <button class="btn" type="button" onclick="dayQuery();"><i
+                                                class="glyphicon glyphicon-certificate"></i>按日粒度查询</button>
+                                        <button class="btn" type="button" onclick="monthQuery();"><i
+                                                class="glyphicon glyphicon-cloud"></i> 按月粒度查询</button>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row" style="padding: 10px">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="easyui-tabs" data-options="tabWidth:503,tabHeight:40,fit:true,border:true"
+                                     style="width:900px;height:600px">
+                                    <div title="图形分析" style="padding:10px;width: 200px">
+                                        <div class="buttons-preview" style="margin: 10px 0px 10px 25px">
+                                            <button class="btn btn-primary " type="button"
+                                                    onclick="switchDisplayType('http访问成功率')"><i
+                                                    class="glyphicon glyphicon-arrow-up"></i>http请求成功率
+                                            </button>
+                                            <button class="btn btn-primary " type="button"
+                                                    onclick="switchDisplayType('http平均响应时延')"><i
+                                                    class="glyphicon glyphicon-share-alt"></i>http响应时延
+                                            </button>
+                                            <button class="btn btn-primary " type="button"
+                                                    onclick="switchDisplayType('http平均下载速率')"><i
+                                                    class="glyphicon glyphicon-sort-by-attributes-alt"></i>http下载速率
+                                            </button>
+                                            <button class="btn btn-danger  " type="button" onclick="showDiagnosis()"><i
+                                                    class="glyphicon glyphicon-eye-close"></i>指标诊断
+                                            </button>
+                                        </div>
+                                        <div class="row" style="margin: 40px 0px 20px 10px">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="jumbotron" id="w1" style="width: 450px;height: 400px">
+                                                    <h1>NO DATA</h1>
+                                                    <p>数据不存在请更换条件或者联系管理员</p>
+                                                </div>
+                                                <div id="ColumnGraphical"></div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="jumbotron" id="w2" style="width: 450px;height: 400px">
+                                                    <h1>NO DATA</h1>
+                                                    <p>数据不存在请更换条件或者联系管理员</p>
+                                                </div>
+                                                <div id="BrokenlineGraphical"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div title="表格分析" style="padding:10px;width: 200px">
+                                        <div class="buttons-preview" style="margin: 10px 0px 10px 0px">
+                                            <button class="btn btn-primary " type="button" onclick="showSingleTime()"><i
+                                                    class="glyphicon glyphicon-arrow-up"></i>单时间点数据
+                                            </button>
+                                            <button class="btn btn-primary " type="button" onclick="hadBound()"><i
+                                                    class="glyphicon glyphicon-sort-by-attributes-alt"></i>已定界数据
+                                            </button>
+                                            <button class="btn btn-danger  " type="button" onclick="showDiagnosis()"><i
+                                                    class="glyphicon glyphicon-eye-close"></i>指标诊断
+                                            </button>
+                                        </div>
+                                        <table id="simpledatatable">
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--下拉列表样式-->
+<script type="text/javascript">
+
+    function formatItem(row) {
+        //下拉列表类型选择
+        var a = ["label label-default",
+            "label label-primary",
+            "label label-info",
+            "label label-success",
+            "label label-danger",
+            "label label-warning",
+            "label label-sky",
+            "label label-blueberry",
+            "label label-yellow",
+            "label label-darkorange",
+            "label label-magenta",
+            "label label-purple",
+            "label label-maroon",
+            "label label-darkpink",
+            "label label-pink",
+            "label label-azure",
+            "label label-orange"];
+        var n = Math.floor(Math.random() * 17);
+        var s = '<span class="' + a[n] + '">' + row.text + '</span>';
+        return s;
+    }
+</script>
+<!--柱形图绘制-->
+<script>
+    function drawColumnGraphical(data, operation) {
+        //获取当前查询时间作为副标题
+        var displayDate = new Date(getViewData().queryDate);
+        displayDate = displayDate.getFullYear() + "年" + (displayDate.getMonth() + 1) + "月" + displayDate.getDate() + "日";
+        var allResult = getDataForColumn(data, operation);
+        //空数据处理
+        if (allResult.result[0] === undefined) {
+            $("#w1").show();
+            $("#ColumnGraphical").html("");
+        } else {
+            $("#w1").hide();
+            $(function () {
+                /*var data = [
+                    {name: '咪咕阅读', value: 55.11, color: '#4572a7'},
+                    {name: '掌阅', value: 29.84, color: '#aa4643'},
+                    {name: '腾讯读书', value: 24.88, color: '#89a54e'},
+                    {name: '微信读书', value: 6.77, color: '#80699b'}
+                ];*/
+                var chart = new iChart.Column2D({
+                    render: 'ColumnGraphical',
+                    data: allResult.result,
+                    title: {
+                        text: '各业务近七时间点' + allResult.title + '对比',
+                        color: '#3e576f'
+                    },
+                    subtitle: {
+                        text: displayDate.toString(),
+                        color: '#6d869f'
+                    },
+                    footnote: {
+                        text: '自有竞对业务分析系统',
+                        color: '#909090',
+                        fontsize: 11,
+                        padding: '0 38'
+                    },
+                    width: 500,
+                    height: 550,
+                    label: {
+                        fontsize: 11,
+                        color: '#666666'
+                    },
+                    shadow: true,
+                    shadow_blur: 2,
+                    shadow_color: '#aaaaaa',
+                    shadow_offsetx: 1,
+                    shadow_offsety: 0,
+                    column_width: 62,
+                    sub_option: {
+                        listeners: {
+                            parseText: function (r, t) {
+                                return t + allResult.parseText;
+                            }
+                        },
+                        label: {
+                            fontsize: 11,
+                            fontweight: 400,
+                            color: '#4572a7'
+                        },
+                        border: {
+                            width: 2,
+//radius : '5 5 0 0',//上圆角设置
+                            color: '#ffffff'
+                        }
+                    },
+                    coordinate: {
+                        background_color: null,
+                        grid_color: '#c0c0c0',
+                        width: 380,
+                        axis: {
+                            color: '#c0d0e0',
+                            width: [0, 0, 1, 0]
+                        },
+                        scale: [{
+                            position: 'left',
+                            start_scale: 0,
+                            end_scale: allResult.Ymax,
+                            scale_space: allResult.segment,
+                            scale_enable: false,
+                            label: {
+                                fontsize: 11,
+                                color: '#666666'
+                            }
+                        }]
+                    }
+                });
+
+                /**
+                 *利用自定义组件构造左侧说明文本。
+                 */
+                chart.plugin(new iChart.Custom({
+                    drawFn: function () {
+                        /**
+                         *计算位置
+                         */
+                        var coo = chart.getCoordinate(),
+                                x = coo.get('originx'),
+                                y = coo.get('originy'),
+                                H = coo.height;
+                        /**
+                         *在左侧的位置，设置逆时针90度的旋转，渲染文字。
+                         */
+                        chart.target.textAlign('center')
+                                .textBaseline('middle')
+                                .textFont('600 13px Verdana')
+                                .fillText('Total percent market share', x - 40, y + H / 2, false, '#6d869f', false, false, false, -90);
+
+                    }
+                }));
+
+                chart.draw();
+            });
+        }
+
+
+    }
+
+    function getDataForColumn(data, operation) {
+        //数据变量
+        var result = [{}];
+        //单位
+        var parseText = "";
+        //标题
+        var title = "";
+        //Y最大值
+        var Ymax = 0;
+        //分割度
+        var segment = 0;
+        if (operation === "http访问成功率") {
+            var obj = {};
+            for (var i in data) {
+                var s = data[i].rt_bizname;
+                obj[s] = [];
+            }
+            for (var i in data) {
+                var s = data[i].rt_bizname;
+                obj[s].push(data[i].rt_httpsuccrate);
+            }
+            for (var i in obj) {
+                var va = sum(obj[i]) / obj[i].length;
+                if (i !== undefined && i !== '' && i !== null && i !== 'undefined')
+                    result.push({name: i, value: va.toFixed(2), color: getRandomColor()});
+            }
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].name == undefined)
+                    result.splice(i, 1);
+            }
+            //单位
+            parseText = "%";
+            //标题
+            title = "http访问成功率";
+            var arr = [];
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].name !== undefined)
+                    arr.push(result[i].value);
+            }
+            //Y最大值
+            var Ymax = Math.max.apply(Math, arr);
+            //分割度
+            var segment = 10;
+
+        } else if (operation === "http平均响应时延") {
+            var obj = {};
+            for (var i in data) {
+                var s = data[i].rt_bizname;
+                obj[s] = [];
+            }
+            for (var i in data) {
+                var s = data[i].rt_bizname;
+                obj[s].push(data[i].rt_httpavgresptime);
+            }
+            for (var i in obj) {
+                var va = sum(obj[i]) / obj[i].length;
+                if (i !== undefined && i !== '' && i !== null && i !== 'undefined')
+                    result.push({name: i, value: va.toFixed(2), color: getRandomColor()});
+            }
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].name == undefined)
+                    result.splice(i, 1);
+            }
+            //单位
+            parseText = "ms";
+            //标题
+            title = "http平均响应时延";
+            var arr = [];
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].name !== undefined)
+                    arr.push(result[i].value);
+            }
+            //Y最大值
+            var Ymax = Math.max.apply(Math, arr);
+            //分割度
+            var segment = 10;
+        } else if (operation === "http平均下载速率") {
+            var obj = {};
+            for (var i in data) {
+                var s = data[i].rt_bizname;
+                obj[s] = [];
+            }
+            for (var i in data) {
+                var s = data[i].rt_bizname;
+                var c = new Number(data[i].rt_httpdlrate);
+                obj[s].push((c / 1024).toFixed(2));
+            }
+            for (var i in obj) {
+                var va = sum(obj[i]) / obj[i].length;
+                if (i !== undefined && i !== '' && i !== null && i !== 'undefined')
+                    result.push({name: i, value: va.toFixed(2), color: getRandomColor()});
+            }
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].name == undefined)
+                    result.splice(i, 1);
+            }
+            //单位
+            parseText = "Mbps";
+            //标题
+            title = "http平均下载速率";
+            var arr = [];
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].name !== undefined)
+                    arr.push(result[i].value);
+            }
+            //Y最大值
+            var Ymax = Math.max.apply(Math, arr);
+            //分割度
+            var segment = 1;
+
+        } else {
+            return null;
+        }
+        var more = {result: result, title: title, parseText: parseText, Ymax: Ymax, segment: segment};
+        return more;
+    }
+
+
+</script>
+
+<!--折线图绘制-->
+<script>
+    function drawBrokenlineGraphical(data, operation) {
+
+        data.sort(compare("rt_starttime"));
+        var allResult = getDataForBrokenline(data, operation);
+        var displayDate = new Date(getViewData().queryDate);
+        displayDate = displayDate.getFullYear() + "年" + (displayDate.getMonth() + 1) + "月" + displayDate.getDate() + "日";
+        //获取横轴
+        var labels = [];
+        var currentDateArray = {};
+        for (var i in data) {
+            var d = data[i].rt_starttime;
+            currentDateArray[d] = d;
+        }
+        for (var i in currentDateArray) {
+            var c = currentDateArray[i];
+            if (c !== undefined && c !== null && c !== "") {
+                labels.push(c.toString().substr(4, 2) + "-" + c.toString().substr(6, 2));
+            }
+        }
+        //空数据处理
+        if (allResult.result[0] === undefined) {
+            $("#w2").show();
+            $("#BrokenlineGraphical").html("");
+        }
+        else {
+            $("#w2").hide();
+            //折线图绘制
+            $(function () {
+                //var labels = ["01","02","03","04","05","06"];
+                var line = new iChart.LineBasic2D({
+                    render: 'BrokenlineGraphical',
+                    data: allResult.result,
+                    align: 'center',
+                    title: {
+                        text: allResult.title + '近七时间点趋势',
+                        color: '#3e576f'
+                    },
+                    subtitle: {
+                        text: displayDate.toString(),
+                        color: '#6d869f'
+                    },
+                    footnote: {
+                        text: '自有竞对业务分析系统',
+                        color: '#909090',
+                        fontsize: 11,
+                        padding: '0 38'
+                    },
+                    width: 500,
+                    height: 550,
+                    sub_option: {
+                        smooth: true,//平滑曲线
+                        point_size: 10
+                    },
+                    tip: {
+                        enable: true,
+                        shadow: true,
+                        listeners: {
+                            //tip:提示框对象、name:数据名称、value:数据值、text:当前文本、i:数据点的索引
+                            parseText: function (tip, name, value, text, i) {
+                                return "<span style='color:#6668f3;font-size:12px;'>" + name + ":" +
+                                        "</span><span style='color:#161af3;font-size:15px;'>" + value + allResult.parseText + "</span></br>";
+                            }
+                        }
+                    },
+                    tipMocker: function (tips, i) {
+
+                        var s = "<span style='color:#6668f3;font-size:15px;'>" + labels[i] + "，" + operation + ":</span><br>";
+                        for (var j = 0; j < tips.length; j++) {
+                            s = s + tips[j];
+                            console.log(tips[j].split(":"));
+
+                        }
+
+                        return s;
+                    },
+                    legend: {
+                        enable: true,
+                        row: 1,//设置在一行上显示，与column配合使用
+                        column: 'max',
+                        valign: 'top',
+                        sign: 'bar',
+                        background_color: null,//设置透明背景
+                        offsetx: -80,//设置x轴偏移，满足位置需要
+                        border: true
+                    },
+                    crosshair: {
+                        enable: true,
+                        line_color: '#62bce9'
+                    },
+                    noDataLoadingOption: {
+                        text: '暂无数据',
+                        effect: 'bubble'
+                    },
+                    coordinate: {
+                        width: 450,
+                        valid_width: 400,
+                        height: 350,
+                        axis: {
+                            color: '#9f9f9f',
+                            width: [0, 0, 2, 2]
+                        },
+                        grids: {
+                            vertical: {
+                                way: 'share_alike',
+                                value: 12
+                            }
+                        },
+                        scale: [{
+                            position: 'left',
+                            start_scale: allResult.start_scale,
+                            end_scale: allResult.end_scale,
+                            scale_space: allResult.scale_space,
+                            scale_size: 2,
+                            scale_color: '#9f9f9f'
+                        }, {
+                            position: 'bottom',
+                            labels: labels
+                        }]
+                    }
+                });
+                //开始画图
+
+                line.draw();
+            });
+        }
+
+
+    }
+
+    function getDataForBrokenline(data, operation) {
+        var result = [{}];
+        var title = "";
+        var start_scale = 0;
+        var end_scale = 0;
+        var scale_space = 0;
+        var parseText = "";
+        if (operation === "http访问成功率") {
+            var obj = {};
+
+            for (var i in data) {
+                var s = data[i].rt_bizname;
+                obj[s] = [];
+            }
+            for (var i in data) {
+                var s = data[i].rt_bizname;
+                obj[s].push(data[i].rt_httpsuccrate);
+            }
+            for (var i in obj) {
+                if (i !== undefined && i !== '' && i !== null && i !== 'undefined')
+                    result.push({name: i, value: obj[i], color: getRandomColor(), line_width: 2});
+            }
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].name == undefined)
+                    result.splice(i, 1);
+            }
+            title = "http访问成功率";
+            start_scale = 95;
+            end_scale = 100;
+            scale_space = 10;
+            parseText = "%";
+        }
+        else if (operation === "http平均响应时延") {
+            var obj = {};
+
+            for (var i in data) {
+                var s = data[i].rt_bizname;
+                obj[s] = [];
+            }
+            for (var i in data) {
+                var s = data[i].rt_bizname;
+                obj[s].push(data[i].rt_httpavgresptime);
+            }
+
+            for (var i in obj) {
+                if (i !== undefined && i !== '' && i !== null && i !== 'undefined')
+                    result.push({name: i, value: obj[i], color: getRandomColor(), line_width: 2});
+            }
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].name == undefined)
+                    result.splice(i, 1);
+            }
+            title = "http平均响应时延(ms)";
+            start_scale = 0;
+            end_scale = 300;
+            scale_space = 30;
+            parseText = "ms";
+        }
+        else if (operation === "http平均下载速率") {
+            var obj = {};
+
+            for (var i in data) {
+                var s = data[i].rt_bizname;
+                obj[s] = [];
+            }
+            for (var i in data) {
+                var s = data[i].rt_bizname;
+                var c = new Number(data[i].rt_httpdlrate);
+                obj[s].push((c / 1024).toFixed(2));
+            }
+
+            for (var i in obj) {
+                if (i !== undefined && i !== '' && i !== null && i !== 'undefined')
+                    result.push({name: i, value: obj[i], color: getRandomColor(), line_width: 2});
+            }
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].name == undefined)
+                    result.splice(i, 1);
+            }
+            title = "http平均下载速率(Mbps)";
+            start_scale = 0;
+            end_scale = 15;
+            scale_space = 1;
+            parseText = "Mbps";
+        }
+        else {
+            return null;
+        }
+        var more = {
+            result: result,
+            title: title,
+            start_scale: start_scale,
+            end_scale: end_scale,
+            scale_space: scale_space,
+            parseText: parseText
+        }
+        return more;
+    }
+</script>
+
+<!--数据表格绘制-->
+<script>
+
+    var appurl = '{{projcfg.appurl}}/api/home/home_route/';
+    $(document).ready(function () {
+        setTimeout(dayQuery, 0);
+        $("#w1").hide();
+        $("#w2").hide();
+
+        $(function () {
+            //数据表格加载
+            $('#simpledatatable').datagrid({
+                url: appurl,
+                method: 'get',
+                title: '数据表格分析',
+                rownumbers: true,
+                autoRowHeight: true,
+                striped: true,
+                fitColumns: false,
+                border: true,
+                multiSort: true,
+                height: 600,
+                width: 1000,
+                singleSelect: true,
+                selectOnCheck: false,
+                columns: [[
+                    {field: '_id', checkbox: true},
+                    {"field": "rt_bizname", "title": "业务名", "width": 90, "sortable": true},
+                    {"field": "rt_bizcity", "title": "地区", "width": 80, "sortable": true},
+                    {
+                        "field": "rt_starttime",
+                        "title": "记录时间",
+                        "width": 100,
+                        "sortable": true,
+                        "formatter": function (data, rowData, rowIndex) {
+                            return data.substr(0, 4) + "-" + data.substr(4, 2) + "-" + data.substr(6, 2);
+                        }
+                    },
+                    {
+                        "field": "rt_httpsuccrate",
+                        "title": "访问成功率",
+                        "width": 100,
+                        "sortable": true,
+                        "formatter": function (data, rowData, rowIndex) {
+
+                            if (data < 80)
+                                return "<font color='#fb2e17'>" + data + "%</font>";
+                            else
+                                return data + "%"
+                        }
+                    },
+                    {
+                        "field": "rt_httpavgresptime",
+                        "title": "平均响应时延",
+                        "width": 100,
+                        "sortable": true,
+                        "formatter": function (data, rowData, rowIndex) {
+                            if (data > 500)
+                                return "<font color='#fb2e17'>" + data + "ms</font>";
+                            else
+                                return data + "ms"
+                        }
+                    },
+                    {
+                        "field": "rt_httpdlrate",
+                        "title": "平均下载速率",
+                        "width": 110,
+                        "sortable": true,
+                        "formatter": function (data, rowData, rowIndex) {
+                            if (data < 500)
+                                return "<font color='#fb2e17'>" + data + "kbps</font>";
+                            else
+                                return data + "kbps"
+                        }
+                    },
+                    {
+                        "field": "rt_ultraffic",
+                        "title": "总上行流量",
+                        "width": 110,
+                        "sortable": true,
+                        "formatter": function (data, rowData, rowIndex) {
+                            return (data / (1024 * 1024)).toFixed(2) + "M"
+                        }
+                    },
+                    {
+                        "field": "rt_dltraffic",
+                        "title": "总下行流量",
+                        "width": 120,
+                        "sortable": true,
+                        "formatter": function (data, rowData, rowIndex) {
+                            return (data / (1024 * 1024)).toFixed(2) + "M"
+                        }
+                    },
+                    {"field": "rt_activeusernbr", "title": "在线用户数", "width": 120, "sortable": true}
+                ]],
+                onClickRow: function (rowIndex, rowData) {
+                    var a = rowData.rt_httpsuccrate_reason;
+                    var b = rowData.rt_httpavgresptime_reason;
+                    var c = rowData.rt_httpdlrate_reason;
+                    var text = "";
+                    if (a != "") {
+                        text = text + "http访问成功率定界结论:" + a;
+                    }
+                    if (b != "") {
+                        text = text + "http平均响应时延定界结论:" + b;
+                    }
+                    if (c != "") {
+                        text = text + "http平均下载速率定界结论:" + c;
+                    }
+                    if (a == "" && b == "" && c == "") {
+                        text = text + "该条数据暂未定界，请进入指标诊断并提交工单.";
+                    }
+                    alert(text);
+                },
+                onBeforeLoad: function (param) {
+                    if (param.rt_bizcity == undefined)
+
+                        return false;
+                    else {
+                        return true;
+                    }
+
+                },
+                onLoadSuccess: function (json) {
+                    if (!json.success && json != null) {
+                        msgError(json.msg);
+                    }
+                },
+                onLoadError: function () {
+                    msgError('加载数据出现时发生错误,请稍候重试...');
+                },
+                pagination: true,
+                loadMsg: '正在加载...'
+            });
+            var role_code = '{{currentUserRole.role_code}}';
+            var org_code = '{{currentUser.user_org.org_code}}';
+            var login_account = '{{currentUser.login_account}}';
+
+            if (org_code != "000102" && login_account != "yangruofan") {
+                if (role_code == "001" || role_code == "sysadmin" || role_code == "002" || role_code == "005" || role_code == "007") {
+                    $('#org_codeSelectDiv').show();
+                } else {
+                    $('#org_codeSelectDiv').hide();
+                    $('#activeCss').css({
+                        "margin-left": "150px"
+                    });
+                }
+            } else {
+                $('#org_codeSelectDiv').show();
+            }
+
+        });
+    });
+</script>
+
+<!--数据获取-->
+<script>
+
+    /**
+     * 获取用户在页面选择的比较条件，当条件不足时将使用默认条件
+     * @param dataType
+     * @returns rt_bizcity: jQuery, ownRt_bizname: jQuery, otherRt_bizname: jQuery, queryDate: jQuery, dataType:
+     */
+    function getViewData(dataType) {
+        var rt_bizcity = $('#rt_bizcity').combobox('getValue');
+        var ownRt_bizname = $('#ownRt_bizname').combobox('getValue');
+        var otherRt_bizname = $('#otherRt_bizname').combobox('getValues');
+        var queryDate = $('#queryDate').combobox('getValue');
+        if (rt_bizcity == "地区选择") {
+            rt_bizcity = "贵州";
+        }
+        if (ownRt_bizname == "自有业务选择") {
+            ownRt_bizname = "咪咕阅读";
+        }
+        if (otherRt_bizname[1] == undefined && otherRt_bizname[0] == '竞对业务选择') {
+            otherRt_bizname[0] = '起点图书';
+            otherRt_bizname[1] = 'QQ阅读';
+            otherRt_bizname[2] = '熊猫看书';
+            otherRt_bizname[3] = '掌阅iReader';
+        }
+        var date = new Date();
+        var ss = date.getFullYear() + "-" + (date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)) + "-" + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
+        if (queryDate == ss) {
+            var hh=new Date();
+            queryDate = hh(dayTimeTransf(hh));
+        }
+        var obj = {
+            rt_bizcity: rt_bizcity,
+            ownRt_bizname: ownRt_bizname,
+            otherRt_bizname: otherRt_bizname,
+            queryDate: queryDate,
+            dataType: dataType
+        };
+        return obj;
+    }
+
+    function dayTimeTransf(time) {
+        if(typeof time=='object'){
+            var timeStamp=time.getFullYear() + "" +
+                    (time.getMonth() < 9 ? '0' + (time.getMonth() + 1) : (time.getMonth() + 1)) + "" +
+                    (time.getDate() < 10 ? '0' + time.getDate() : time.getDate());
+            return timeStamp;
+        }else{
+            var date=time.substring(0,4)+"-"+time.substring(4,6)+"-"+time.substring(6,8);
+            return date;
+        }
+    }
+
+    var OverallSituationData;
+
+    function getRemoteData(viewData, cb) {
+        $.ajax({
+            url: '{{projcfg.appurl}}/api/home/home_route/',
+            data: viewData,
+            type: 'get',
+            success: function (data) {
+                if (data.success) {
+                    OverallSituationData = null;
+                    OverallSituationData = data.rows;
+                    cb(data.rows);
+                }
+                else {
+                    msgError(data.msg + ',错误代码:' + data.code);
+                }
+            }
+        });
+    }
+
+
+</script>
+
+<!--页面事件响应函数-->
+<script>
+    /**
+     * http访问成功率
+     * http平均响应时延
+     * http平均下载速率
+     */
+    var currentTimeType = 'day';
+
+    function dayQuery() {
+        $('#simpledatatable').datagrid('reload', getViewData('day'));
+        getRemoteData(getViewData('day'), function (data) {
+            currentTimeType = 'day';
+            drawColumnGraphical(data, "http访问成功率");
+            drawBrokenlineGraphical(data, "http访问成功率");
+        });
+    }
+
+    function monthQuery() {
+        $('#simpledatatable').datagrid('reload', getViewData('mon'));
+        getRemoteData(getViewData('mon'), function (data) {
+            currentTimeType = 'mon';
+            drawColumnGraphical(data, "http访问成功率");
+            drawBrokenlineGraphical(data, "http访问成功率");
+        });
+    }
+
+    function switchDisplayType(displayType) {
+        drawColumnGraphical(OverallSituationData, displayType);
+        drawBrokenlineGraphical(OverallSituationData, displayType);
+    }
+
+    $('#ownRt_bizname').combobox({
+        onSelect: function (param) {
+            $('#otherRt_bizname').combobox('clear');
+            var currentType;
+            var num = 0;
+            var music = [{id: "QQ音乐", text: "QQ音乐"}, {id: "酷我音乐", text: "酷我音乐"}, {
+                id: "百度音乐",
+                text: "百度音乐"
+            }, {id: "多米音乐", text: "多米音乐"}, {id: "虾米音乐", text: "虾米音乐"}, {id: "沃音乐", text: "沃音乐"}, {
+                id: "豆瓣FM",
+                text: "豆瓣FM"
+            }, {id: "酷狗音乐", text: "酷狗音乐"}, {id: "爱音乐", text: "爱音乐"}, {id: "网易云音乐", text: "网易云音乐"}, {
+                id: "多听FM",
+                text: "多听FM"
+            }, {id: "爱听4G", text: "爱听4G"}, {id: "echo回声", text: "echo回声"}];
+            var comic = [{id: "有妖气漫画", text: "有妖气漫画"}, {id: "布卡漫画", text: "布卡漫画"}, {
+                id: "爱动漫",
+                text: "爱动漫"
+            }, {id: "腾讯动漫", text: "腾讯动漫"}, {id: "漫画岛", text: "漫画岛"}, {id: "漫画控", text: "漫画控"}, {
+                id: "追追漫画",
+                text: "追追漫画"
+            }, {id: "快看漫画", text: "快看漫画"}, {id: "动漫之家", text: "动漫之家"}, {id: "可米酷漫画", text: "可米酷漫画"}, {
+                id: "第一弹",
+                text: "第一弹"
+            }, {id: "大角虫漫画", text: "大角虫漫画"}];
+            var read = [{id: "起点读书", text: "起点读书"}, {id: "熊猫看书", text: "熊猫看书"}, {
+                id: "QQ阅读",
+                text: "QQ阅读"
+            }, {id: "掌阅iReader", text: "掌阅iReader"}, {id: "懒人听书", text: "懒人听书"}, {
+                id: "宜搜小说",
+                text: "宜搜小说"
+            }, {id: "网易云阅读", text: "网易云阅读"}, {id: "书旗小说", text: "书旗小说"}, {id: "蜻蜓FM", text: "蜻蜓FM"}, {
+                id: "爱阅读",
+                text: "爱阅读"
+            }, {id: "荔枝FM", text: "荔枝FM"}, {id: "多看阅读", text: "多看阅读"}, {id: "追书神器", text: "追书神器"}, {
+                id: "天翼阅读",
+                text: "天翼阅读"
+            }, {id: "氧气听书", text: "氧气听书"}, {id: "搜狗阅读", text: "搜狗阅读"}];
+            var disport = [{id: "虎牙直播", text: "虎牙直播"}, {id: "熊猫TV", text: "熊猫TV"}, {
+                id: "悦跑圈",
+                text: "悦跑圈"
+            }, {id: "Nike+Running", text: "Nike+Running"}, {id: "Keep", text: "Keep"}];
+            switch (param.text) {
+                case "咪咕动漫": {
+                    currentType = comic;
+                    break;
+                }
+                case "咪咕音乐": {
+                    currentType = music;
+                    break;
+                }
+                case "咪咕阅读": {
+                    currentType = read;
+                    break;
+                }
+                case "咪咕游戏": {
+                    currentType = disport;
+                    break;
+                }
+                case "灵犀": {
+                    currentType = read;
+                    break;
+                }
+            }
+
+
+            $('#otherRt_bizname').combobox({
+                data: currentType,
+                valueField: "id",
+                textField: "text",
+                panelWidth: 130,
+                multiple: true,
+                panelHeight: "auto",
+                formatter: function (row) {
+                    //下拉列表类型选择
+                    var a = ["label label-default", "label label-primary", "label label-info", "label label-success", "label label-danger", "label label-warning", "label label-sky", "label label-blueberry", "label label-yellow", "label label-darkorange", "label label-magenta", "label label-purple", "label label-maroon", "label label-darkpink", "label label-pink", "label label-azure", "label label-orange"];
+                    var s = '<span class="' + a[num] + '">' + row.text + '</span>';
+                    num++;
+                    return s;
+                }
+            });
+        }
+    });
+
+
+    function doSearchInTable() {
+        var rawData = $("#simpledatatable").datagrid('getData');
+        var viewData = getViewData();
+        viewData.otherRt_bizname.push(viewData.ownRt_bizname);
+        alert(rawData.rows.length);
+
+        $("#simpledatatable").datagrid('loadData', qq);
+    }
+
+    function showDiagnosis() {
+        var data = getViewData(currentTimeType);
+        window.location.href = "{{projcfg.appurl}}/api/home/home_route/toDiagnosis?queryDate=" + data.queryDate
+                + "&dataType=" + currentTimeType + "&ownRt_bizname=" + data.ownRt_bizname + "&otherRt_bizname=" + data.otherRt_bizname
+                + "&rt_bizcity=" + data.rt_bizcity;
+    }
+
+    function sum(arr) {
+        var sum = 0;
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] != undefined && arr[i] != null && arr[i] != '')
+                sum = sum + Number(arr[i]);
+        }
+        return sum;
+    }
+
+    function getRandomColor() {
+        return (function (m, s, c) {
+            return (c ? arguments.callee(m, s, c - 1) : '#') +
+                    s[m.floor(m.random() * 16)]
+        })(Math, '0123456789abcdef', 5)
+    }
+
+    function compare(property) {
+        return function (a, b) {
+            var value1 = a[property];
+            var value2 = b[property];
+            value1 = new Number(value1.toString().substr(0, 8));
+            value2 = new Number(value2.toString().substr(0, 8));
+            return value1 - value2;
+        }
+    }
+
+    var currentDisplayStatus = 0;
+
+    function showSingleTime() {
+        if (currentDisplayStatus == 0) {
+            var currentSelectTime = getViewData(currentTimeType).queryDate;
+            var date = new Date(currentSelectTime);
+            var ss = date.getFullYear() + "" + (date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)) + "" + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + "0000";
+            var toBeDisplay = [];
+            for (var i in OverallSituationData) {
+                if (OverallSituationData[i].rt_starttime == ss) {
+                    toBeDisplay.push(OverallSituationData[i]);
+                }
+            }
+            currentDisplayStatus = 1;
+            $('#simpledatatable').datagrid('loadData', {
+                "success": true,
+                "code": "0000",
+                "msg": "查询成功",
+                "rows": toBeDisplay,
+                "total": toBeDisplay.length
+            });
+        }
+        else if (currentDisplayStatus == 1) {
+            currentDisplayStatus = 0;
+            $('#simpledatatable').datagrid('loadData', {
+                "success": true,
+                "code": "0000",
+                "msg": "查询成功。",
+                "rows": OverallSituationData,
+                "total": OverallSituationData.length
+            });
+        }
+
+    };
+
+    function hadBound() {
+        var toBeDisplay = [];
+        for (var i in OverallSituationData) {
+            var a = OverallSituationData[i].rt_httpsuccrate_reason;
+            var b = OverallSituationData[i].rt_httpavgresptime_reason;
+            var c = OverallSituationData[i].rt_httpdlrate_reason;
+            if (a != "" || b != "" || c != "") {
+                toBeDisplay.push(OverallSituationData[i]);
+            }
+        }
+        for (var i in toBeDisplay) {
+            if ((typeof toBeDisplay[i]) != "object") {
+                toBeDisplay.splice(i, 1);
+            }
+        }
+
+        if (toBeDisplay.length == 0) {
+            alert("该查询下所有记录均未定界");
+            $('#simpledatatable').datagrid('loadData', {
+                "success": true,
+                "code": "0000",
+                "msg": "查询成功。",
+                "rows": [],
+                "total": toBeDisplay.length
+            });
+        } else if (toBeDisplay.length != 0) {
+            $('#simpledatatable').datagrid('loadData', {
+                "success": true,
+                "code": "0000",
+                "msg": "查询成功。",
+                "rows": toBeDisplay,
+                "total": toBeDisplay.length
+            });
+        }
+
+    };
+</script>
+
+
+
+
+
+
+
+

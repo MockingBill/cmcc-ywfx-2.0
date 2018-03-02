@@ -1,0 +1,464 @@
+<!--create by dengqian-->
+<div class="easyui-layout" data-options="fit:true,border:true"
+     style="width: 1050.99px; height:100%;background-color: #f3eff3;">
+
+    <div class="row" style="margin: 10px 0px 10px 0px">
+        <div class="widget" >
+            <div class="widget-header bordered-bottom bordered-blue">
+                <span class="widget-caption"><h5>当前比较业务</h5></span>
+            </div>
+
+        <div class="widget-body" style="height:{{ride result.length}}px">
+            {{#each result}}
+                <div class="col-sm-6 col-md-4">
+                    <div class="databox databox-xlg databox-halved databox-shadowed databox-vertical no-margin-bottom">
+                        <div class="databox-top bg-white padding-10">
+                            <div class="col-lg-4 col-sm-4 col-xs-4">
+                                <img src="/project/static/images/logo/{{this.rt_bizname}}.jpg"
+                                     style="width:75px; height:75px;"
+                                     class="image-circular bordered-3 bordered-palegreen">
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-xs-8 text-align-left padding-10">
+                                <span class="databox-header carbon no-margin">{{this.rt_bizname}}</span>
+                                <span class="databox-text lightcarbon no-margin">采集时间:{{toDate this.rt_starttime}}</span>
+                            </div>
+                        </div>
+                        <div class="databox-bottom bg-white no-padding">
+                            <div class="databox-row row-12">
+                                <div class="databox-row row-6 no-padding">
+                                    <div class="databox-cell cell-4 no-padding text-align-center bordered-right bordered-platinum">
+                                        <span class="databox-text sonic-silver  no-margin">http请求成功率</span>
+                                        <span class="databox-number lightcarbon no-margin">{{this.rt_httpsuccrate}}
+                                            %</span>
+                                    </div>
+                                    <div class="databox-cell cell-4 no-padding text-align-center bordered-right bordered-platinum">
+                                        <span class="databox-text sonic-silver no-margin">http响应时延</span>
+                                        <span class="databox-number lightcarbon no-margin">{{this.rt_httpavgresptime}}
+                                            ms</span>
+                                    </div>
+                                    <div class="databox-cell cell-4 no-padding text-align-center">
+                                        <span class="databox-text sonic-silver no-margin">http下行速率</span>
+                                        <span class="databox-number lightcarbon no-margin">{{this.rt_httpdlrate}}
+                                            mbps</span>
+                                    </div>
+                                </div>
+                                <div class="databox-row row-6 padding-10">
+                                    <a href="javascript:void(0);" class="btn btn-default btn btn-pale-blue btn-sm pull-right" data-container="body" data-titleclass="bordered-blue" data-class="dark" data-toggle="popover-hover" data-placement="bottom"
+                                       data-title="其他详情" data-content="上行流量:{{this.rt_ultraffic}}GB,下行流量:{{this.rt_dltraffic}}GB,活跃人数:{{this.rt_activeusernbr}}人" data-original-title="" title="">详情</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+        </div>
+    </div>
+    <div class="row" style="margin: 10px 0px 10px 0px">
+        <div class="col-md-6">
+            <div class="widget" >
+                <div class="widget-header bordered-bottom bordered-blue">
+                    <span class="widget-caption"><h5>指标分析结果</h5></span>
+                </div>
+                <div class="widget-body">
+                    <div class="invoice-notes" style="margin:0px 20px 10px 40px">
+                        <h3>网络情况</h3>
+                        {{#each networkText}}
+                            <p>{{this}}</p>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="widget">
+                <div class="widget-header bordered-bottom bordered-blue">
+                    <span class="widget-caption"><h5>定界结论</h5></span>
+                </div>
+                <div class="widget-body" style="height:366px">
+                    <div class="invoice-notes">
+                        <h3>定界结论</h3>
+                        {{#each diagnoiseText}}
+                            <p>{{this}}</p>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="buttons-preview" align="center" style="margin: 10px 0px 30px 0px">
+                <button class="btn shiny btn-primary" onclick="buildWorkOrder()" type="button">
+                    <i class="glyphicon glyphicon-list-alt"></i>建立工单
+                </button>
+
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+
+                <button class="btn shiny btn-primary" onclick="returnHome()" type="button">
+                    <i class="glyphicon glyphicon-chevron-left"></i>返回首页
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    /**
+     * 设置日期框时间默认为当前时间
+     **/
+    formatterDate = function (date) {
+        var day = date.getDate() > 9 ? date.getDate() : "0" + date.getDate();
+        var month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : "0"
+                + (date.getMonth() + 1);
+        var hor = date.getHours();
+        var min = date.getMinutes();
+        var sec = date.getSeconds();
+        return date.getFullYear() + '-' + month + '-' + day + " " + hor + ":" + min + ":" + sec;
+    };
+
+    function doAdd() {
+        $.ajax({
+            /*server url */
+            url: '{{projcfg.appurl}}/api/home/home_route/',
+            type: 'post',
+            /*form id*/
+            data: $('#workOrderForm').serializeJson(),
+            success: function (data) {
+                if (data.success) {
+                    msgSuccess(data.msg);
+                }
+                else {
+                    msgError(data.msg + ',错误代码:' + data.code);
+                }
+            }
+        });
+
+    }
+
+
+    function buildWorkOrder() {
+        //设置日期框为当前日期
+        $('#alarmCreateTime').datetimebox('setValue', formatterDate(new Date()));
+
+        $('#workOrderModal').show();
+        $('#workOrderModal').mydialog({
+            title: "建立工单",
+            autoOpen: false,
+            width: 600,
+            height: 900,
+            top: 50,
+            modal: true,
+            myButtons: [
+                {
+                    text: '确定',
+                    btnCls: 'btn btn-blue',
+                    handler: function () {
+                        fileupload(function (data) {
+                            if (data != null && data != undefined && data != "") {
+                                $("#attachName").val(data.attachName);
+                                $("#attachUrl").val(data.attachUrl);
+                            }
+                            doAdd();
+                        });
+
+                    }
+                },
+                {
+                    text: '关闭',
+                    btnCls: 'btn btn-danger',
+                    handler: function () {
+                        $('#workOrderForm').form('clear');
+                        $('#workOrderModal').dialog('close');
+                    }
+                }
+            ]
+        });
+    }
+
+    function returnHome() {
+        window.location.href = "{{projcfg.appurl}}/newHome"
+    }
+
+    /**
+     * 上传文件使用，在新增被调用
+     * @param id
+     * @returns {boolean}
+     */
+    function fileupload(cb) {
+        var formData = new FormData($('#file-upload')[0]);
+        $.ajax({
+            url: '{{projcfg.appurl}}/api/home/home_route/upload',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.data != undefined)
+                    cb(data.data);
+                else
+                    cb(undefined);
+                msgSuccess(data.msg);
+            },
+            error: function (data) {
+                msgError('上传文件出现异常,错误代码:0000');
+            }
+        });
+    }
+</script>
+
+<!--派单窗口-->
+<div class="mydialog">
+    <div id="workOrderModal" align="center">
+        <div class="row">
+            <div class="col-md-12">
+                <form id="workOrderForm" class="form-horizontal form-bordered" role="form"
+                      enctype="multipart/form-data">
+                    <div class="form-group">
+                        <div class="col-sm-9" align="center" style="margin: 5px">
+                            <!--窗口上方留白-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputNo" class="col-sm-2 control-label no-padding-right">工单标题</label>
+                        <div class="col-sm-9">
+                            <div class="input-group" style="width: 340px">
+                                <input type="text" class="easyui-validatebox form-control"
+                                       data-options="required:true"
+                                       name="alarmTitle" id="alarmTitle"
+                                       placeholder="请输入工单标题">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputName"
+                               class="col-sm-2 control-label no-padding-right">告警产生时间</label>
+                        <div class="col-sm-9">
+                            <input class="easyui-datetimebox easyui-validatebox form-control"
+
+                                   data-options="required:true"
+                                   name="alarmCreateTime" id="alarmCreateTime"
+                                   style="width:340px;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputMobile"
+                               class="col-sm-2 control-label no-padding-right">网络分类</label>
+                        <div class="col-sm-9">
+                            <select class="easyui-validatebox easyui-combobox"
+                                    data-options="required:true,editable:false,panelHeight:100" name="netType"
+                                    id="netType"
+                                    style="width:340px;height:34px;">
+                                <option value="1010104020105 ">核心网</option>
+                                <option value="1010104010612">无线网</option>
+                                <option value="1010104127605">业务网</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputName"
+                               class="col-sm-2 control-label no-padding-right">网元id</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" data-options="required:true" id="neId" name="neId"
+                                   style="width:340px;height:35px"
+                                   placeholder="请输入网元id,不确定请填0或不填">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAge"
+                               class="col-sm-2 control-label no-padding-right">网元名称</label>
+                        <div class="col-sm-9">
+                            <input class="easyui-validatebox form-control"
+                                   placeholder="设备名称，根据专业室自定义"
+                                   id="neName" name="neName" style="width:340px;height:35px"
+                                   data-options="required:true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputStatus"
+                               class="col-sm-2 control-label no-padding-right">设备厂家</label>
+                        <div class="col-sm-9">
+                            <input class="easyui-validatebox form-control" data-options="required:true"
+                                   name="alarmVendor" id="alarmVendor" style="width:340px;height:35px">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputStatus"
+                               class="col-sm-2 control-label no-padding-right">省份</label>
+                        <div class="col-sm-9">
+                            <input readonly="true" value="贵州" class="form-control" data-options="required:true"
+                                   name="alarmProvince" id="alarmProvince" style="width:340px;height:35px">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputStatus"
+                               class="col-sm-2 control-label no-padding-right">所属地市</label>
+                        <div class="col-sm-9">
+                            <select class="easyui-validatebox easyui-combobox"
+                                    data-options="required:true,editable:false,panelHeight:100" name="alarmRegion"
+                                    id="alarmRegion"
+                                    style="width:340px;height:34px;">
+                                <option value="贵阳市">贵阳市</option>
+                                <option value="遵义市">遵义市</option>
+                                <option value="安顺地区">安顺地区</option>
+                                <option value="毕节地区">毕节地区</option>
+                                <option value="黔南">黔南</option>
+                                <option value="黔东南">黔东南</option>
+                                <option value="六盘水市">六盘水市</option>
+                                <option value="铜仁地区">铜仁地区</option>
+                                <option value="黔西南">黔西南</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--非必须填写-->
+                    <div class="form-group">
+                        <label for="inputName"
+                               class="col-sm-2 control-label no-padding-right">所属区县</label>
+                        <div class="col-sm-9">
+                            <input name="alarmCity" id="alarmCity"
+                                   class="form-control"
+                                   style="width:340px;height:34px;">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputName"
+                               class="col-sm-2 control-label no-padding-right">告警描述</label>
+                        <div class="col-sm-9">
+                            <textarea name="alarmDetail" id="alarmDetail"
+                                      class="easyui-validatebox form-control"
+                                      data-options="required:true"
+                                      style="width:340px;height:140px;"></textarea>
+
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                         <label for="inputName"
+                                class="col-sm-2 control-label no-padding-right">告警级别</label>
+                         <div class="col-sm-9">
+                             <input name="alarmHandleLevel" id="alarmHandleLevel"
+                                     class="easyui-validatebox form-control"
+                                    data-options="required:true"
+                                     style="width:340px;height:34px;" placeholder="必填，暂填1">
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="inputName"
+                                class="col-sm-2 control-label no-padding-right">工单创建类型</label>
+                         <div class="col-sm-9">
+                             <input type="text" class="easyui-validatebox form-control"
+                                    data-options="required:true"
+                                    style="width:340px" name="createType" id="createType"
+                                    placeholder="必填，暂填0">
+                         </div>
+                     </div>-->
+                    <!--非必须填派单人相关信息-->
+                    <div class="form-group" style="margin:20px 10px 15px 10px;">
+                        <label for="inputName"
+                               class="col-sm-2 control-label no-padding-right">派单人</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="easyui form-control"
+                                   data-options="required:true"
+                                   value="{{currentUser.user_name}}"
+                                   style="width:340px" name="sodr_staff" id="sodr_staff">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin:20px 10px 15px 10px;">
+                        <label for="inputName"
+                               class="col-sm-2 control-label no-padding-right">派单人部门</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="easyui form-control"
+                                   data-options="required:true"
+                                   value="{{currentUser.user_org.org_name}}"
+                                   style="width:340px" name="sodr_depart" id="sodr_depart">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin:20px 10px 15px 10px;">
+                        <label for="inputName"
+                               class="col-sm-2 control-label no-padding-right">派单人联系方式</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="easyui form-control"
+                                   data-options="required:true"
+                                   value="{{currentUser.user_phone}}"
+                                   style="width:340px" name="sodrstaff_tel" id="sodrstaff_tel">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputName"
+                               class="col-sm-2 control-label no-padding-right">派单人邮箱</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="easyui form-control"
+                                   data-options="required:true"
+                                   value="{{currentUser.user_email}}"
+                                   style="width:340px" name="sodrstaff_email" id="sodrstaff_email">
+                        </div>
+                    </div>
+                    <!-- 非必填-->
+                    <div class="form-group">
+                        <label for="inputName"
+                               class="col-sm-2 control-label no-padding-right">要求完成时间</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="easyui form-control"
+                                   data-options="required:true"
+                                   style="width:340px" name="limitDatas" id="limitDatas"
+                                   placeholder="输入要求完成时间">
+                        </div>
+                    </div>
+                    <!--<div class="form-group">
+                        <label for="inputName"
+                               class="col-sm-2 control-label no-padding-right">派单环境</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="easyui-validatebox form-control"
+                                   data-options="required:true"
+                                   style="width:340px" name="environment" id="environment"
+                                   placeholder="请输入任务备注">
+                        </div>
+                    </div>-->
+                    <div class="form-group">
+                        <label for="inputName"
+                               class="col-sm-2 control-label no-padding-right">派单类型</label>
+                        <div class="col-sm-9">
+
+                            <select class="easyui-validatebox easyui-combobox"
+                                    data-options="required:true,editable:false,panelHeight:100" name="alarmFromType"
+                                    id="alarmFromType"
+                                    style="width:340px;height:34px;">
+                                <option value="传输性能">传输性能</option>
+                                <option value="VOLTE端到端">VOLTE端到端</option>
+                                <option value="动环性能">动环性能</option>
+                                <option value="移动互联网端到端">移动互联网端到端</option>
+                                <option value="PTN传输">PTN传输</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" data-options="required:true"
+                           name="attachName" id="attachName">
+                    <input type="hidden" data-options="required:true"
+                           name="attachUrl" id="attachUrl">
+                </form>
+                <form id="file-upload" action="#" name="file-upload" enctype='multipart/form-data' method="post">
+                    <div class="form-group" style="margin:20px 10px 15px 10px;">
+                        <label for="inputName"
+                               class="col-sm-2 control-label no-padding-right">工单附件</label>
+                        <div class="col-sm-9">
+                            <!-- 上传文件form -->
+                            <input id="fb" name="dn_enclosure" multiple='mutiple'
+                                   class="easyui-filebox" style="width:343px;height: 40px"
+                                   data-options="prompt:'支持Word、Excel、rar、zip类型'">
+                        </div>
+                    </div>
+                </form>
+                <div class="col-sm-9" align="center" style="margin: 5px">
+                    <!--窗口下方留白-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--派单窗口结束-->
+
+
+

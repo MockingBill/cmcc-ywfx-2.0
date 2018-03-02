@@ -1,0 +1,61 @@
+<div class="jumbotron">
+    <h1>自有竞对业务分析系统后台管理</h1>
+    <div class="row">
+        <div class="col-md-6 ">
+            <h2>系统配置</h2>
+            <h3><a href="javascript:void(0);" data-container="body" data-titleclass="bordered-blue" data-class="dark"
+                   data-toggle="popover-hover" data-placement="right" data-title="参数管理"
+                   data-content="对某个系统下的初始化参数进行增删改查等操作，此类参数可以在程序中以hbs表达式的方式进行获取。非开发人员请勿更改该配置。" data-original-title=""
+                   title="">
+                参数管理
+            </a></h3>
+            <h3><a href="javascript:void(0);" data-container="body" data-titleclass="bordered-blue" data-class="dark"
+                   data-toggle="popover-hover" data-placement="right" data-title="字典管理"
+                   data-content="对任意系统下的数据字典参数进行增删改查，数据字典通常指在应用中常用的一个或一组数据，通过一般的数字对应相关数据。非开发人员请勿更改该配置。"
+                   data-original-title="" title="">
+                字典管理
+            </a></h3>
+            <h3><a href="javascript:void(0);" data-container="body" data-titleclass="bordered-blue" data-class="dark"
+                   data-toggle="popover-hover" data-placement="right" data-title="系统管理"
+                   data-content="系统是本框架的基本单位，任何一个用户属于一个或多个系统，任意菜单只能属于一个系统。这是权限管理中最大的一个单位。在该配置下能对系统主页进行修改，对系统状态进行更改等。"
+                   data-original-title="" title="">
+                系统管理
+            </a></h3>
+            <h3><a href="javascript:void(0);" data-container="body" data-titleclass="bordered-blue" data-class="dark"
+                   data-toggle="popover-hover" data-placement="right" data-title="菜单管理"
+                   data-content="菜单属于一个系统中，每个菜单下可配置菜单权限API，请不要修改菜单下的API，这将导致某些功能无法使用。在该配置下可对菜单的URL、图标、导航名等进行修改。"
+                   data-original-title="" title="">
+                菜单管理
+            </a></h3>
+        </div>
+        <div class="col-md-6" >
+            <h2>用户配置</h2>
+            <h3><a href="javascript:void(0);" data-container="body" data-titleclass="bordered-blue" data-class="dark"
+                   data-toggle="popover-hover" data-placement="right" data-title="角色管理"
+                   data-content="每个用户的权限是由该用户的角色来定义，管理员可为每个角色设置该角色能访问哪些页面及该页面下的API，在进入角色管理后请注意选择系统。请在配置某角色菜单的时候将该菜单下的所有api一并选择。请在修改左边树形图后点击设置权限按钮。" data-original-title=""
+                   title="">
+                角色管理
+            </a></h3>
+            <h3><a href="javascript:void(0);" data-container="body" data-titleclass="bordered-blue" data-class="dark"
+                   data-toggle="popover-hover" data-placement="right" data-title="机构管理"
+                   data-content="每个用户将属于一个机构，该机构最好是使用者所处环境的真实机构，该机构字段将在工单提交时自填入对话框。"
+                   data-original-title="" title="">
+                机构管理
+            </a></h3>
+            <h3><a href="javascript:void(0);" data-container="body" data-titleclass="bordered-blue" data-class="dark"
+                   data-toggle="popover-hover" data-placement="right" data-title="用户管理"
+                   data-content="用户是使用者的基本单位，每个用户拥有多个或者一个角色，由角色定义该用户能访问什么，不能访问什么。一个用户属于一个系统，决定了该用户登录的时候将进入哪个系统。在配置时请尽量将用户信息填写完全，这样会在工单提交时自动补全提交人信息。用户系统请选择自有业务质量监测及竞对分析。"
+                   data-original-title="" title="">
+                用户管理
+            </a></h3>
+        </div>
+    </div>
+</div>
+<!--
+<script src="{{projcfg.appurl}}/static/js/beyondAdmin/tree-custom.min.js"></script>
+<script src="{{projcfg.appurl}}/static/js/beyondAdmin/treeview-init.js"></script>
+<script>
+    jQuery(document).ready(function () {
+        UITree.init();
+    });
+</script>-->

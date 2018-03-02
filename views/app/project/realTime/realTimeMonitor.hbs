@@ -1,0 +1,1241 @@
+<!--Flot Charts Needed Scripts-->
+<script src="{{projcfg.appurl}}/static/js/fontJquery/jquery.flot.js"></script>
+<script src="{{projcfg.appurl}}/static/js/fontJquery/jquery.flot.resize.js"></script>
+<script src="{{projcfg.appurl}}/static/js/fontJquery/jquery.flot.pie.js"></script>
+<script src="{{projcfg.appurl}}/static/js/fontJquery/jquery.flot.tooltip.js"></script>
+<script src="{{projcfg.appurl}}/static/js/fontJquery/jquery.flot.orderBars.js"></script>
+<script src="{{projcfg.appurl}}/static/hightCharts/highcharts.js"></script>
+
+<style>
+    .mySpan {
+        font-size: large;
+        color: white;
+        font-weight: bold;
+        padding-left: 20px;
+    }
+
+    /*  #realtime1,#realtime2,#realtime3 {
+          width: 100%;
+          height: 400px;
+      }*/
+</style>
+<!--页面功能区-->
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-body">
+                <div id="cc" class="easyui-layout" data-options="fit:true,border:false"
+                     style="width:900px; height:1700px;background-color: #fbfbfb;">
+                    <div data-options="region:'center',border:false" style="overflow-x:hidden;overflow-y:hidden">
+                        <div id="toolbar" class="row tbRow" style="margin: 20px">
+                            <div class="col-xs-8 col-md-8">
+                                <form id="selectForm" class="form-inline">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input class="easyui-combobox" value="地区选择"
+                                                   style="width: 130px;height:34px;"
+                                                   name="rt_bizcity" id="rt_bizcity"
+                                                   data-options='data:[{id:"贵州",text:"贵州"},
+           {id:"贵阳",text:"贵阳"},
+           {id:"遵义",text:"遵义"},
+           {id:"贵安新区",text:"贵安新区"},
+           {id:"安顺",text:"安顺"},
+           {id:"都匀",text:"都匀"},
+           {id:"凯里",text:"凯里"},
+           {id:"铜仁",text:"铜仁"},
+           {id:"毕节",text:"毕节"},
+           {id:"六盘水",text:"六盘水"},
+           {id:"兴义",text:"兴义"},],
+           valueField: "id",
+           textField: "text",
+           panelWidth: 130,
+           panelHeight: "auto",
+           formatter: formatItem'>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input class="easyui-combobox" value="自有业务选择"
+                                                   style="width: 130px;height:34px;"
+                                                   name="ownRt_bizname" id="ownRt_bizname"
+                                                   data-options='data:[
+           {id:"咪咕音乐",text:"咪咕音乐"},
+           {id:"咪咕动漫",text:"咪咕动漫"},
+           {id:"咪咕阅读",text:"咪咕阅读"},
+           {id:"灵犀",text:"灵犀"},
+           {id:"咪咕游戏",text:"咪咕游戏"},],
+           valueField: "id",
+           textField: "text",
+           panelWidth: 130,
+           panelHeight: "auto",
+           formatter: formatItem'>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-xs-4 col-md-4 text-right">
+                                <form id="searchFrom" class="form-inline">
+                                    <div class="form-group" id="org_codeSelectDiv">
+                                        <div class="input-group">
+    <span class="input-group-btn">
+        <button class="btn btn-default" type="button" onclick="doSearch();">
+            <i class="fa fa-search"></i>查询</button>
+    </span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                <div class="databox databox-xxlg databox-inverted databox-vertical databox-shadowed databox-graded radius-bordered">
+                                    <div class="databox-top bg-white ">
+                                        <div class="databox-row row-1">
+                                            <div class="databox-stat orange radius-bordered font-120">
+                                                <i class=" fa-pagelines"></i>
+                                            </div>
+                                        </div>
+                                        <div class="databox-row row-8">
+                                            <div id="pie-chart-weather" class="chart"
+                                                 style="height: 160px; padding: 0px; position: relative;">
+                                                <div id="placeholder"
+                                                     style="direction: ltr; position: absolute; left: 0px; top: -5px; width: 229px; height: 160px;"></div>
+                                            </div>
+                                            <div class="flot-donut-caption">
+                                                <span class="databox-number sonic-silver no-margin">
+                                                    <label id="aaa"></label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="databox-row row-3 padding-10">
+                                            <span class="databox-number darkorange no-margin">用户数</span>
+                                            <span class="databox-text carbon no-margin">(人次)</span>
+                                        </div>
+                                    </div>
+                                    <div class="databox-bottom no-padding bg-white bordered bordered-platinum">
+                                        <div class="databox-row row-12 no-padding">
+                                            <div class="databox-cell cell-4 no-padding text-align-center bg-yellow">
+                                                <span class="databox-number no-margin" id="userNum1">0%</span>
+                                                <span class="databox-text no-margin">同比</span>
+                                            </div>
+                                            <div class="databox-cell cell-4 no-padding text-align-center bg-darkorange">
+                                                <span class="databox-number no-margin" id="userNum2">0</span>
+                                                <span class="databox-text no-margin">当前</span>
+                                            </div>
+                                            <div class="databox-cell cell-4 no-padding text-align-center bg-danger">
+                                                <span class="databox-number no-margin" id="userNum3">0</span>
+                                                <span class="databox-text no-margin">方差</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                <div class="databox databox-xxlg databox-inverted databox-vertical databox-shadowed databox-graded radius-bordered">
+                                    <div class="databox-top bg-white ">
+                                        <div class="databox-row row-1">
+                                            <div class="databox-stat orange radius-bordered font-120">
+                                                <i class="stat-icon wi wi-rain icon-xlg"></i>
+                                            </div>
+                                        </div>
+                                        <div class="databox-row row-8">
+                                            <div id="pie-chart-weather" class="chart"
+                                                 style="height: 160px; padding: 0px; position: relative;">
+                                                <div id="placeholder2"
+                                                     style="direction: ltr; position: absolute; left: 18px; top: -5px ; width: 229px; height: 160px;"></div>
+                                            </div>
+                                            <div class="flot-donut-caption">
+                                                <span class="databox-number sonic-silver no-margin">
+                                                    <label id="bbb" style="margin:0px 1px 0px 20px;"></label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="databox-row row-3 padding-10">
+                                            <span class="databox-number darkorange no-margin">总流量</span>
+                                            <span class="databox-text carbon no-margin">(Gb)</span>
+                                        </div>
+                                    </div>
+                                    <div class="databox-bottom no-padding bg-white bordered bordered-platinum">
+                                        <div class="databox-row row-12 no-padding">
+                                            <div class="databox-cell cell-4 no-padding text-align-center bg-yellow">
+                                                <span class="databox-number no-margin" id="flow1">0%</span>
+                                                <span class="databox-text no-margin">同比</span>
+                                            </div>
+                                            <div class="databox-cell cell-4 no-padding text-align-center bg-darkorange">
+                                                <span class="databox-number no-margin" id="flow2">0</span>
+                                                <span class="databox-text no-margin">当前</span>
+                                            </div>
+                                            <div class="databox-cell cell-4 no-padding text-align-center bg-danger">
+                                                <span class="databox-number no-margin" id="flow3">0</span>
+                                                <span class="databox-text no-margin">方差</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                <div class="databox databox-xxlg databox-inverted databox-vertical databox-shadowed databox-graded radius-bordered">
+                                    <div class="databox-top bg-white ">
+                                        <div class="databox-row row-1">
+                                            <div class="databox-stat orange radius-bordered font-120">
+                                                <i class="stat-icon wi wi-rain icon-xlg"></i>
+                                            </div>
+                                        </div>
+                                        <div class="databox-row row-8">
+                                            <div id="pie-chart-weather" class="chart"
+                                                 style="height: 160px; padding: 0px; position: relative;">
+                                                <div id="placeholder3"
+                                                     style="direction: ltr; position: absolute; left: 0px; top: -5px ; width: 229px; height: 160px;"></div>
+                                            </div>
+                                            <div class="flot-donut-caption">
+                                    <span class="databox-number sonic-silver no-margin">
+                                            <label id="ccc"></label>
+                                    </span>
+                                            </div>
+                                        </div>
+                                        <div class="databox-row row-3 padding-10">
+                                            <span class="databox-number darkorange no-margin">人均流量</span>
+                                            <span class="databox-text carbon no-margin">(Mb)</span>
+                                        </div>
+                                    </div>
+                                    <div class="databox-bottom no-padding bg-white bordered bordered-platinum">
+                                        <div class="databox-row row-12 no-padding">
+                                            <div class="databox-cell cell-4 no-padding text-align-center bg-yellow">
+                                                <span class="databox-number no-margin" id="perAvg1">0%</span>
+                                                <span class="databox-text no-margin">同比</span>
+                                            </div>
+                                            <div class="databox-cell cell-4 no-padding text-align-center bg-darkorange">
+                                                <span class="databox-number no-margin" id="perAvg2">0</span>
+                                                <span class="databox-text no-margin">当前</span>
+                                            </div>
+                                            <div class="databox-cell cell-4 no-padding text-align-center bg-danger">
+                                                <span class="databox-number no-margin" id="perAvg3">0</span>
+                                                <span class="databox-text no-margin">方差</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                <div class="orders-container">
+                                    <div class="orders-header">
+                                        <h6>告警通知</h6>
+                                    </div>
+                                    <marquee style="WIDTH: 388px; HEIGHT: 250px" scrollamount="3" direction="up">
+                                        <div align="left"><br/>
+                                        </div>
+                                        <div id="showWarn">
+                                        </div>
+                                    </marquee>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="orders-container">
+                                    <div class="orders-header">
+                                        <h6>业务实时人数</h6>
+                                    </div>
+                                    <ul class="orders-list" id="realTimeUser">
+                                        <li class="order-item top" style="height:55px">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 item-left">
+                                                    <div class="item-booker">业务名称</div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 item-right">
+                                                    <div class="item-price">
+                                                        <span class="price">人数(人次)</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="widget">
+                                    <div class="widget-header">
+                                        <span class="widget-caption">用户-流量趋势</span>
+                                    </div>
+                                    <div class="widget-body" style="width: 850px;">
+                                        <div id="canvasDiv" style="margin: 0px 5px 0px 0px" align="center"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="orders-container">
+                                    <div class="orders-header">
+                                        <h6>业务实时流量</h6>
+                                    </div>
+                                    <ul class="orders-list" id="realTimeTraff">
+                                        <li class="order-item top" style="height: 45px">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 item-left">
+                                                    <div class="item-booker">业务名称</div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 item-right">
+                                                    <div class="item-price">
+                                                        <span class="price">流量(M)</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="widget">
+                                    <div class="widget-header">
+                                        <span class="widget-caption">指标监控</span>
+                                    </div>
+                                    <div class="widget-body" style="width: 850px">
+                                        <div id="container1" style="width:820px; height:220px;padding: 0px;"></div>
+                                        <div id="container2" style="width:820px; height:220px;padding: 0px;"></div>
+                                        <div id="container3" style="width:820px; height:220px;padding: 0px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--启动ready-->
+<script>
+    var drawProcess1, drawProcess2, drawProcess3;
+
+    var getJsonForFull = {};
+
+    $(document).ready(function () {
+        var currentDay = new Date();
+        $("current-day").append("<label>" + currentDay.getDate() + "</label>");
+
+        getData(function (data) {
+            drawColumnarAndLine(data.res);
+            getDataForPie(data.res);
+            drawRealTimeLine(data.res);
+            setStaData(data.sta);
+        });
+        drawPieChart();
+        getTableForRealTra();
+    });
+
+    function doSearch() {
+        getData(function (data) {
+            clearInterval(drawProcess1);
+            clearInterval(drawProcess2);
+            clearInterval(drawProcess3);
+            drawColumnarAndLine(data.res);
+            getDataForPie(data.res);
+            drawRealTimeLine(data.res);
+            setStaData(data.sta);
+        });
+        drawPieChart();
+        getTableForRealTra();
+    }
+</script>
+
+<script>
+    function getTableForRealTra() {
+
+        getAllRealTraff(function (a) {
+            var data = a.obj1
+            var warnData = a.warn1;
+            var showDataForUser = [];
+            var showDataForRate = [];
+            for (var i in data) {
+                showDataForUser.push({name: i, value: getSumData(data[i].rt_activeusernbr)});
+                showDataForRate.push({name: i, value: (getSumData(data[i].rt_httpdlrate) / 1024).toFixed(2)});
+            }
+
+            showDataForUser = showDataForUser.sort(compare('value'));
+            showDataForRate = showDataForRate.sort(compare('value'));
+            $("#realTimeUser").empty();
+            $("#realTimeTraff").empty();
+
+            for (var i = 0; i < 5; i++) {
+                $('#realTimeUser').append(
+                        "<li class=\"order-item top\" style=\"height:72.5px\" >\n" +
+                        "<div class=\"row\">\n" +
+                        "<div class=\"col-lg-6 col-md-6 col-sm-6 col-xs-6 item-left\">\n" +
+                        "<div class=\"item-booker\">" + showDataForUser[i].name + "</div>\n" +
+                        "</div>\n" +
+                        "<div class=\"col-lg-6 col-md-6 col-sm-6 col-xs-6 item-right\">\n" +
+                        "<div class=\"item-price\">\n" +
+                        "<span class=\"price\">" + showDataForUser[i].value + "</span>\n" +
+                        "</div>\n" +
+                        "</div>\n" +
+                        "</div>\n" +
+                        " <a class=\"item-more\" href=\"#\">\n" +
+                        "<i></i>\n" +
+                        "</a>\n" +
+                        " </li>");
+            }
+
+            for (var i = 0; i < 6; i++) {
+                $('#realTimeTraff').append(
+                        "<li class=\"order-item top\" >\n" +
+                        "<div class=\"row\">\n" +
+                        "<div class=\"col-lg-6 col-md-6 col-sm-6 col-xs-6 item-left\">\n" +
+                        "<div class=\"item-booker\">" + showDataForRate[i].name + "</div>\n" +
+                        "</div>\n" +
+                        "<div class=\"col-lg-6 col-md-6 col-sm-6 col-xs-6 item-right\">\n" +
+                        "<div class=\"item-price\">\n" +
+                        "<span class=\"price\">" + showDataForRate[i].value + "</span>\n" +
+                        "</div>\n" +
+                        "</div>\n" +
+                        "</div>\n" +
+                        " <a class=\"item-more\" href=\"#\">\n" +
+                        "<i></i>\n" +
+                        "</a>\n" +
+                        " </li>");
+            }
+
+
+            $('#showWarn').empty();
+            for (var i = 0; i < warnData.length; i++) {
+                if (warnData[i] != undefined){
+                    console.log(warnData[i]);
+                    $('#showWarn').append(" <p ><font color=\"#ff4500\" size=\"2\">" + warnData[i] + "</font ></p >");
+
+                }
+            }
+
+
+        });
+
+    }
+</script>
+
+<!-- 画实时动态图-->
+<script>
+
+    function drawRealTimeLine(data) {
+
+        var ownRealTimedata1 = [], ownRealTimedata2 = [], ownRealTimedata3 = [];
+
+        var business1 = $('#ownRt_bizname').combobox('getValues');
+
+        var city = $('#rt_bizcity').combobox('getValues');
+
+
+        for (var i in data) {
+            if ((data[i].rt_bizname == business1 || data[i].rt_bizname === '咪咕音乐') && (data[i].rt_bizcity == city || data[i].rt_bizcity === '遵义')) {
+                if ((data[i].rt_httpsuccrate !== '' && data[i].rt_httpsuccrate !== null && data[i].rt_httpsuccrate !== undefined) ||
+                        (data[i].rt_httpavgresptime !== '' && data[i].rt_httpavgresptime !== null && data[i].rt_httpavgresptime !== undefined) ||
+                        (xdata[i].rt_httpdlrate !== '' && data[i].rt_httpdlrate !== null && data[i].rt_httpdlrate !== undefined)) {
+                    ownRealTimedata1.push({x: tranDate(data[i].rt_starttime), y: Number(data[i].rt_httpsuccrate)});
+                    ownRealTimedata2.push({x: tranDate(data[i].rt_starttime), y: Number(data[i].rt_httpavgresptime)});
+                    ownRealTimedata3.push({x: tranDate(data[i].rt_starttime), y: Number(data[i].rt_httpdlrate)});
+                }
+            }
+        }
+
+        for (var i = 0; i < ownRealTimedata3.length; i++) {
+            for (var j = 0; j < ownRealTimedata3.length; j++) {
+                var obj = {};
+                if (ownRealTimedata3[j].x > ownRealTimedata3[i].x) {
+                    obj = ownRealTimedata3[j];
+                    ownRealTimedata3[j] = ownRealTimedata3[i];
+                    ownRealTimedata3[i] = obj;
+                }
+            }
+        }
+        for (var i = 0; i < ownRealTimedata2.length; i++) {
+            for (var j = 0; j < ownRealTimedata2.length; j++) {
+                var obj = {};
+                if (ownRealTimedata2[j].x > ownRealTimedata2[i].x) {
+                    obj = ownRealTimedata2[j];
+                    ownRealTimedata2[j] = ownRealTimedata2[i];
+                    ownRealTimedata2[i] = obj;
+                }
+            }
+        }
+        for (var i = 0; i < ownRealTimedata1.length; i++) {
+            for (var j = 0; j < ownRealTimedata1.length; j++) {
+                var obj = {};
+                if (ownRealTimedata1[j].x > ownRealTimedata1[i].x) {
+                    obj = ownRealTimedata1[j];
+                    ownRealTimedata1[j] = ownRealTimedata1[i];
+                    ownRealTimedata1[i] = obj;
+                }
+            }
+        }
+
+        var currDynamicData = [];
+        var otherDynamicData = [];
+        for (var k = 0; k < ownRealTimedata1.length; k++) {
+            if (ownRealTimedata1[k].x <= getCurrTime(data[0].rt_starttime)) {
+                currDynamicData.push(ownRealTimedata1[k]);
+            } else {
+                otherDynamicData.push(ownRealTimedata1[k]);
+            }
+        }
+
+        drawDynamic1(currDynamicData, otherDynamicData, "container1");
+
+        currDynamicData = [];
+        otherDynamicData = [];
+        for (var k = 0; k < ownRealTimedata2.length; k++) {
+            if (ownRealTimedata2[k].x <= getCurrTime(data[0].rt_starttime)) {
+                currDynamicData.push(ownRealTimedata2[k]);
+            } else {
+                otherDynamicData.push(ownRealTimedata2[k]);
+            }
+        }
+        drawDynamic2(currDynamicData, otherDynamicData, "container2");
+
+        currDynamicData = [];
+        otherDynamicData = [];
+        for (var k = 0; k < ownRealTimedata3.length; k++) {
+            if (ownRealTimedata3[k].x <= getCurrTime(data[0].rt_starttime)) {
+                currDynamicData.push(ownRealTimedata3[k]);
+            } else {
+                otherDynamicData.push(ownRealTimedata3[k]);
+            }
+        }
+        drawDynamic3(currDynamicData, otherDynamicData, "container3");
+
+
+    }
+</script>
+
+<!-- 获取饼状图数据-->
+<script>
+
+    //获取饼状图数据
+    function getDataForPie(data) {
+
+        var all_user = 0;
+        var avg = 0;
+        var all_traffic = 0;
+        data=tranCurrentTime(data);
+
+
+        for (var i in data) {
+            if (data[i].rt_activeusernbr !== '' && data[i].rt_activeusernbr !== null && data[i].rt_activeusernbr !== undefined) {
+                all_user = Number(data[i].rt_activeusernbr) + all_user;
+            }
+            if (data[i].rt_dltraffic !== '' && data[i].rt_dltraffic !== null && data[i].rt_dltraffic !== undefined
+                    && data[i].rt_ultraffic !== '' && data[i].rt_ultraffic !== null && data[i].rt_ultraffic !== undefined) {
+
+                all_traffic = Number(data[i].rt_dltraffic) + Number(data[i].rt_ultraffic) + all_traffic;
+
+            }
+
+        }
+
+        if (all_user == 0) {
+            avg = 0;
+        } else {
+            avg = all_traffic / 1024 / all_user;
+        }
+
+
+        $('#aaa').html("<strong>" + all_user + "</strong>");
+        $('#bbb').html("<strong>" + Math.round(all_traffic / 1024 / 1024) + "</strong>");
+        $('#ccc').html("<strong>" + avg.toFixed(2) + "</strong>");
+
+    }
+
+    //获取数据后画柱折线图
+    function drawColumnarAndLine(data) {
+        data=tranCurrentTime(data);
+
+        var array = {};
+        for (var i = 0; i < data.length; i++) {
+            array[data[i].rt_starttime.substr(0, 10)] = [];
+        }
+        for (var i = 0; i < data.length; i++) {
+            array[data[i].rt_starttime.substr(0, 10)].push({
+                userNum: data[i].rt_activeusernbr,
+                traffic: Number(data[i].rt_dltraffic) + Number(data[i].rt_ultraffic)
+            });
+        }
+        var activeNum = [];
+        var flowNum = [];
+        var lineData2 = [];
+        for (var i in array) {
+            var sum1 = 0;
+            var sum2 = 0;
+            for (var j = 0; j < array[i].length; j++) {
+                if (Number(array[i][j].userNum) != NaN)
+                    sum1 = Number(array[i][j].userNum) + sum1;
+                if (Number(array[i][j].traffic) != NaN)
+                    sum2 = Number(array[i][j].traffic) + sum2;
+            }
+            activeNum.push({name: i.substr(8, 2), value: Math.round(sum1 / array[i].length), color: "#c52120"});
+            flowNum.push((Number(sum2) / 1024 / 1024).toFixed(2));
+        }
+        lineData2.push({name: '', value: flowNum, color: "#2939d9"});
+
+
+        var columnarData = [];
+        var lineData = [];
+
+        var trafficData = [];
+        var activeusernbrData = [];
+        var title = '';
+
+        var business1 = $('#ownRt_bizname').combobox('getValues');
+        var city = $('#rt_bizcity').combobox('getValues');
+
+
+        for (var i in data) {
+
+            if ((data[i].rt_bizname === business1 || data[i].rt_bizname === '咪咕音乐') && (data[i].rt_bizcity === city || data[i].rt_bizcity === '遵义')) {
+                if (data[i].rt_activeusernbr !== '' && data[i].rt_activeusernbr !== null && data[i].rt_activeusernbr !== undefined &&
+                        data[i].rt_dltraffic !== '' && data[i].rt_dltraffic !== null && data[i].rt_dltraffic !== undefined
+                        && data[i].rt_ultraffic !== '' && data[i].rt_ultraffic !== null && data[i].rt_ultraffic !== undefined) {
+                    activeusernbrData = Number(data[i].rt_activeusernbr);
+                    columnarData.push({
+                        name: data[i].rt_starttime.substr(8, 2),
+                        value: activeusernbrData,
+                        color: '#c52120'
+                    });
+                    if ((typeof Number(data[i].rt_ultraffic)) === 'number' && (typeof Number(data[i].rt_dltraffic)) === 'number')
+                        trafficData.push(Math.round(Number(data[i].rt_ultraffic / 1024 / 1024)) + Math.round(Number(data[i].rt_dltraffic / 1024 / 1024)));
+
+                }
+
+            }
+
+            title = data[1].rt_bizname;
+
+        }
+
+        lineData = [{name: '', value: trafficData, color: '#34a1d9', line_width: 5}];
+        drawColumnarForReal(activeNum, lineData2, (Math.max(activeusernbrData)));
+
+    }
+</script>
+
+<!--画柱状折线图-->
+<script>
+
+    //画柱状折线图
+
+    function drawColumnarForReal(columnarData, lineData, max) {
+        var chart = new iChart.Column2D({
+            render: 'canvasDiv',
+            data: columnarData,
+            footnote: {
+                text: '实时用户-流量图',
+                height: 50,
+                color: '#648cc5',
+                fontweight: 600,
+                padding: '0 60'
+            },
+            width: 750,
+            height: 400,
+            padding: 0,
+            label: {
+                fontsize: 11,
+                fontweight: 600,
+                color: '#666666'
+            },
+            shadow: true,
+            shadow_blur: 2,
+            shadow_color: '#aaaaaa',
+            shadow_offsetx: 1,
+            shadow_offsety: 0,
+            background_color: '#f7f7f7',
+            column_width: 62,
+            sub_option: {
+                label: false,
+                border: {
+                    width: 2,
+                    radius: '5 5 0 0',//上圆角设置
+                    color: '#ffffff'
+                }
+            },
+            coordinate: {
+                background_color: null,
+                grid_color: '#c0c0c0',
+                width: 620,
+                height: 220,
+                axis: {
+                    color: '#c0d0e0',
+                    width: [0, 0, 1, 0]
+                },
+                scale: [{
+                    position: 'left',
+                    start_scale: 0,
+                    end_scale: (10-max%10)+max,
+                    scale_space:((10-max%10)+max)/10,
+                    scale_enable: false,
+                    label: {
+                        fontsize: 11,
+                        fontweight: 600,
+                        color: '#666666'
+                    }
+                }, {
+                    position: 'right',
+                    start_scale: 0,
+                    scale_space: (Math.round(getMax(lineData[0].value)) + 50) / 5,
+                    end_scale: Math.round(getMax(lineData[0].value)) + 50,
+                    scale_enable: false,
+                    scaleAlign: 'right',
+                    label: {
+                        fontsize: 11,
+                        fontweight: 600,
+                        color: '#666666'
+                    }
+                }]
+            }
+        });
+        //构造折线图
+
+        var line = new iChart.LineBasic2D({
+            z_index: 1000,
+            data: lineData,
+            label: {
+                color: '#4c4f48'
+            },
+            point_space: chart.get('column_width') + chart.get('column_space'),
+            scaleAlign: 'right',
+            sub_option: {
+                label: false,
+                point_size: 10
+            },
+            coordinate: chart.coo//共用坐标系
+        });
+
+        chart.plugin(line);
+
+
+        //利用自定义组件构造左侧说明文本
+        chart.plugin(new iChart.Custom({
+            drawFn: function () {
+                //计算位置
+                var coo = chart.getCoordinate(),
+                        x = coo.get('originx'),
+                        y = coo.get('originy');
+                //在左上侧的位置，渲染一个单位的文字
+                chart.target.textAlign('start')
+                        .textBaseline('bottom')
+                        .textFont('600 16px Verdana')
+                        .fillText('用户数', x - 20, y - 20, false, '#c52120')
+                        .textFont('600 11px Verdana')
+                        .fillText('（人次）', x - 20, y - 10, false, '#c52120');
+
+                //在右上侧的位置，渲染一个单位的文字
+                chart.target.textAlign('end')
+                        .textBaseline('bottom')
+                        .textFont('600 16px Verdana')
+                        .fillText('流量', x + 20 + coo.width, y - 20, false, '#34a1d9')
+                        .textFont('600 11px Verdana')
+                        .fillText('（MB）', x + 20 + coo.width, y - 10, false, '#34a1d9');
+
+            }
+        }));
+
+        chart.draw();
+    }
+
+    //画饼状图
+    function drawPieChart() {
+        data = [
+            {data: 100, color: "#1732f0"},
+            {data: 300, color: "#f0212a"}
+        ];
+        $.plot('#placeholder', data, {
+            series: {
+
+                pie: {
+                    innerRadius: 0.5,
+                    show: true
+                }
+            }
+        });
+        $.plot('#placeholder2', data, {
+            series: {
+                pie: {
+                    innerRadius: 0.5,
+                    show: true
+                }
+            }
+        });
+        $.plot('#placeholder3', data, {
+            series: {
+                pie: {
+                    innerRadius: 0.5,
+                    show: true
+                }
+            }
+        });
+    }
+
+    function getMax(arr) {
+        var max = 0;
+        for (var i in arr) {
+            if (Number(arr[i]) > max)
+                max = Number(arr[i]);
+        }
+        return max;
+    }
+
+</script>
+
+
+<!--下拉框选择-->
+<script>
+    $('#ownRt_bizname').combobox({
+        onSelect: function (param) {
+
+            var currentType;
+            var num = 0;
+            var music = [{id: "QQ音乐", text: "QQ音乐"}, {id: "酷我音乐", text: "酷我音乐"}, {
+                id: "百度音乐",
+                text: "百度音乐"
+            }, {id: "多米音乐", text: "多米音乐"}, {id: "虾米音乐", text: "虾米音乐"}, {id: "沃音乐", text: "沃音乐"}, {
+                id: "豆瓣FM",
+                text: "豆瓣FM"
+            }, {id: "酷狗音乐", text: "酷狗音乐"}, {id: "爱音乐", text: "爱音乐"}, {id: "网易云音乐", text: "网易云音乐"}, {
+                id: "多听FM",
+                text: "多听FM"
+            }, {id: "爱听4G", text: "爱听4G"}, {id: "echo回声", text: "echo回声"}];
+            var comic = [{id: "有妖气漫画", text: "有妖气漫画"}, {id: "布卡漫画", text: "布卡漫画"}, {
+                id: "爱动漫",
+                text: "爱动漫"
+            }, {id: "腾讯动漫", text: "腾讯动漫"}, {id: "漫画岛", text: "漫画岛"}, {id: "漫画控", text: "漫画控"}, {
+                id: "追追漫画",
+                text: "追追漫画"
+            }, {id: "快看漫画", text: "快看漫画"}, {id: "动漫之家", text: "动漫之家"}, {id: "可米酷漫画", text: "可米酷漫画"}, {
+                id: "第一弹",
+                text: "第一弹"
+            }, {id: "大角虫漫画", text: "大角虫漫画"}];
+            var read = [{id: "起点读书", text: "起点读书"}, {id: "熊猫看书", text: "熊猫看书"}, {
+                id: "QQ阅读",
+                text: "QQ阅读"
+            }, {id: "掌阅iReader", text: "掌阅iReader"}, {id: "懒人听书", text: "懒人听书"}, {
+                id: "宜搜小说",
+                text: "宜搜小说"
+            }, {id: "网易云阅读", text: "网易云阅读"}, {id: "书旗小说", text: "书旗小说"}, {id: "蜻蜓FM", text: "蜻蜓FM"}, {
+                id: "爱阅读",
+                text: "爱阅读"
+            }, {id: "荔枝FM", text: "荔枝FM"}, {id: "多看阅读", text: "多看阅读"}, {id: "追书神器", text: "追书神器"}, {
+                id: "天翼阅读",
+                text: "天翼阅读"
+            }, {id: "氧气听书", text: "氧气听书"}, {id: "搜狗阅读", text: "搜狗阅读"}];
+            var disport = [{id: "虎牙直播", text: "虎牙直播"}, {id: "熊猫TV", text: "熊猫TV"}, {
+                id: "悦跑圈",
+                text: "悦跑圈"
+            }, {id: "Nike+Running", text: "Nike+Running"}, {id: "Keep", text: "Keep"}];
+            switch (param.text) {
+                case "咪咕动漫": {
+                    currentType = comic;
+                    break;
+                }
+                case "咪咕音乐": {
+                    currentType = music;
+                    break;
+                }
+                case "咪咕阅读": {
+                    currentType = read;
+                    break;
+                }
+                case "咪咕游戏": {
+                    currentType = disport;
+                    break;
+                }
+                case "灵犀": {
+                    currentType = read;
+                    break;
+                }
+            }
+
+
+        }
+    });
+
+    function formatItem(row) {
+        //下拉列表类型选择
+        var a = ["label label-default",
+            "label label-primary",
+            "label label-info",
+            "label label-success",
+            "label label-danger",
+            "label label-warning",
+            "label label-sky",
+            "label label-blueberry",
+            "label label-yellow",
+            "label label-darkorange",
+            "label label-magenta",
+            "label label-purple",
+            "label label-maroon",
+            "label label-darkpink",
+            "label label-pink",
+            "label label-azure",
+            "label label-orange"];
+        var n = Math.floor(Math.random() * 17);
+        var s = '<span class="' + a[n] + '">' + row.text + '</span>';
+        return s;
+    }
+
+
+</script>
+
+<script>
+
+    //首页获取实时数据，用于展示总流量和告警
+    function getAllRealTraff(cb) {
+
+        var city = $('#rt_bizcity').combobox('getValues');
+
+        if (city == '地区选择') {
+            city = '遵义';
+        }
+
+        $.ajax({
+            url: '{{projcfg.appurl}}/api/realTime/realTime_route/getAllForReal',
+            type: 'get',
+            data: {city: city},
+            success: function (data) {
+                if (data.success) {
+
+                    getJsonForFull = data.data;
+                    cb(getJsonForFull);
+
+                } else {
+                    alert('查询错误');
+                }
+            }
+
+        });
+    }
+
+
+    //获取实时监控数据，用于展示饼状、柱状和实时图
+    function getData(cb) {
+
+        var business = [];
+        var city = $('#rt_bizcity').combobox('getValues');
+        var business1 = $('#ownRt_bizname').combobox('getValues');
+
+
+        if (business1 == '自有业务选择') {
+            business1 = '咪咕音乐';
+        }
+        if (city == '地区选择') {
+            city = '遵义';
+        }
+
+
+        business.push(business1);
+
+
+        $.ajax({
+            url: '{{projcfg.appurl}}/api/realTime/realTime_route/getAll',
+            type: 'get',
+            data: {
+                city: city,
+                business: business
+            },
+            success: function (data) {
+                if (data.success) {
+                    getJsonForFull = data.data;
+
+                    cb(getJsonForFull);
+
+                } else {
+                    alert('查询错误');
+                }
+            }
+
+        });
+
+    }
+
+    function getSumData(data) {
+
+        var aa = 0;
+        if (data.length != 0) {
+            for (var j = 0; j < data.length; j++) {
+                if (data[j] != null && data[j] != undefined && data[j] != '' && data[j] != 'undefined') {
+                    /*  alert(data[j]);*/
+                    aa = Number(data[j]) + aa;
+                }
+
+            }
+            return aa;
+        }
+    }
+
+    function compare(property) {
+        return function (a, b) {
+            var value1 = a[property];
+            var value2 = b[property];
+            value1 = new Number(value1);
+            value2 = new Number(value2);
+            return value2 - value1;
+        }
+    }
+
+    function setStaData(data) {
+        $("#userNum1").text(data[0].an + "%");
+        $("#userNum2").text(data[0].curr);
+        $("#userNum3").text(data[0].variance);
+        $("#flow1").text(data[1].an + "%");
+        $("#flow2").text(data[1].curr);
+        $("#flow3").text(data[1].variance);
+        $("#perAvg1").text(data[2].an + "%");
+        $("#perAvg2").text(data[2].curr);
+        $("#perAvg3").text(data[2].variance);
+    }
+
+
+    var count1 = 0;
+    var count2 = 0;
+    var count3 = 0;
+    var refreshTime=1000*60*5;
+
+    function drawDynamic1(currDynamicData, otherDynamicData, id) {
+
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });
+
+        Highcharts.chart(id, {
+            chart: {
+                type: 'spline',
+                animation: Highcharts.svg, // don't animate in old IE
+                marginRight: 10,
+                events: {
+                    load: function () {
+                        // set up the updating of the chart each second
+                        var series = this.series[0];
+
+                        setInterval(function () {
+                            series.addPoint(otherDynamicData[count1], true, true);
+                            if (count1 + 1 < otherDynamicData.length)
+                                count1++;
+                            else
+                                count1 = 0;
+                        }, refreshTime);
+                    }
+                }
+            },
+            title: {
+                text: 'http请求成功率实时监控'
+            },
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 150
+            },
+            yAxis: {
+                title: {
+                    text: 'Value'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                            Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                            Highcharts.numberFormat(this.y, 2)+'%';
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: '实时请求成功率',
+                data: currDynamicData
+            }]
+        });
+
+    }
+
+    function drawDynamic2(currDynamicData, otherDynamicData, id) {
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });
+
+        Highcharts.chart(id, {
+            chart: {
+                type: 'spline',
+                animation: Highcharts.svg, // don't animate in old IE
+                marginRight: 10,
+                events: {
+                    load: function () {
+                        // set up the updating of the chart each second
+                        var series = this.series[0];
+
+                        setInterval(function () {
+                            series.addPoint(otherDynamicData[count2], true, true);
+                            if (count2 + 1 < otherDynamicData.length)
+                                count2++;
+                            else
+                                count2 = 0;
+                        }, refreshTime);
+                    }
+                }
+            },
+            title: {
+                text: 'http响应时延实时监控'
+            },
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 150
+            },
+            yAxis: {
+                title: {
+                    text: 'Value'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                            Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                            Highcharts.numberFormat(this.y, 2)+'ms';
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: '实时响应时延',
+                data: currDynamicData
+            }]
+        });
+
+    }
+
+    function drawDynamic3(currDynamicData, otherDynamicData, id) {
+
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });
+
+        Highcharts.chart(id, {
+            chart: {
+                type: 'spline',
+                animation: Highcharts.svg, // don't animate in old IE
+                marginRight: 10,
+                events: {
+                    load: function () {
+                        // set up the updating of the chart each second
+                        var series = this.series[0];
+
+                        setInterval(function () {
+                            series.addPoint(otherDynamicData[count3], true, true);
+                            if (count3 + 1 < otherDynamicData.length)
+                                count3++;
+                            else
+                                count3 = 0;
+                        }, refreshTime);
+                    }
+                }
+            },
+            title: {
+                text: 'http下载速率实时监控'
+            },
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 150
+            },
+            yAxis: {
+                title: {
+                    text: 'Value'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function () {
+
+                    return '<b>' + this.series.name + '</b><br/>' +
+                            Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                            Highcharts.numberFormat(this.y, 2)+'kbps';
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: '实时下载速率',
+                data: currDynamicData
+            }]
+        });
+
+    }
+
+    function getCurrTime(str) {
+        var date = new Date();
+        var ss = str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8) + " " +
+                (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ":" +
+                (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
+        date = new Date(ss);
+
+
+        return date.getTime();
+    }
+
+    function tranDate(str) {
+        var date = new Date(str.substring(0, 4) + "-" + str.substring(4, 6) + "-" + str.substring(6, 8) + " " + str.substring(8, 10) +
+                ":" + str.substring(10, 12));
+        return date.getTime();
+    }
+
+
+    function tranCurrentTime(data) {
+        var item=[];
+        for(var i=0;i<data.length;i++){
+            var date=new Date();
+            var  currtime=Number((date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + "" +
+                    (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()));
+            if(Number(data[i].rt_starttime.substring(8,12))<currtime){
+                item.push(data[i]);
+            }
+        }
+        return item;
+    }
+</script>
+
+
+
+

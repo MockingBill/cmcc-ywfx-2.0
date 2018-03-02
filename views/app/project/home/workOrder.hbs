@@ -1,0 +1,182 @@
+<!--create bu dengqian-->
+<style>
+    .mySpan {
+        font-size: large;
+        color: white;
+        font-weight: bold;
+        padding-left: 20px;
+        z-index:778;
+    }
+</style>
+<!--功能区-->
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-body">
+                <div id="cc" class="easyui-layout" data-options="fit:true,border:false"
+                     style="width:800px; height:580px;background-color: #fbfbfb;">
+                    <div data-options="region:'center',border:false" style="overflow-x:hidden;overflow-y:hidden">
+                        <div id="toolbar" class="row tbRow">
+                            <div class="col-xs-8 col-md-8">
+                                <!--<div class="btn-group" role="group" style="width:800px;" aria-label="...">
+                                    <button type="button" class="btn btn-default azure"
+                                            onclick="openPage('新增任务信息','add', doAdd);"
+                                            data-title="新建">
+                                        <i class="glyphicon glyphicon-plus"></i>新建
+                                    </button>
+                                </div>-->
+                            </div>
+                            <div class="col-xs-4 col-md-4 text-right">
+                                <form id="searchFrom" class="form-inline"  >
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="input" id="sname" name="sname" class="form-control"
+                                                   style="width:200px;" placeholder="工单标题">
+                                            <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="button"
+                                                                onclick="doSearch()"><i
+                                                                class="fa fa-search"></i>查询</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!--主显示页面 easyUI dataGrid-->
+                        <table id="simpledatatable"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--功能区结束-->
+
+<script>
+    $(document).ready(function () {
+        $(function () {
+            //数据表格加载
+            $('#simpledatatable').datagrid({
+                url:'{{projcfg.appurl}}/api/home/home_route/listWorkOrder',
+                method:'get',
+                title:"工单管理",
+                height:500,
+                striped:true,
+                fitColumns:false,
+                border:true,
+                singleSelect:true,
+                selectOnCheck:false,
+                columns:[[
+                    {field: '_id', checkbox: true},
+                    {"field": "sheetNo", "title": "工单号", "sortable":true},
+                    {"field": "alarmTitle", "title": "工单标题", "sortable":true},
+                    {"field": "alarmDetail", "title": "工单内容" },
+                    {"field": "netType", "title": "网络分类" ,"formatter": function (data, rowData, rowIndex) {
+                            if(data="0"||data==""||data==undefined||data==null)
+                                return "无";
+                    }},
+                    {"field": "neId", "title": "网元id","formatter": function (data, rowData, rowIndex) {
+                        if(data="0"||data==""||data==undefined||data==null)
+                            return "无";
+                    } },
+                    {"field": "neName", "title": "网元名称" },
+                    {"field": "alarmVendor", "title": "设备厂家" },
+                    {"field": "createType", "title": "创建类型","formatter": function (data, rowData, rowIndex) {
+                        if(data="0"||data==""||data==undefined||data==null)
+                            return "无";
+                    } },
+                    {"field": "limitDatas", "title": "要求时间" ,"formatter": function (data, rowData, rowIndex) {
+                        if(data="0"||data==""||data==undefined||data==null)
+                            return "无";
+                    }},
+                    {"field": "alarmProvince", "title": "省份"},
+                    {"field": "alarmRegion", "title": "城市","sortable":true},
+                    {"field": "sodr_staff", "title": "派单人","sortable":true},
+                    {"field": "sodrstaff_tel", "title": "联系方式"},
+                    {"field": "alarmHandleLevel", "title": "紧急程度"}
+
+
+                ]],
+                onDblClickRow:function(rowIndex, rowData){
+                    showDetail();
+                },
+                onLoadSuccess:function(json) {
+                    if(!json.success) {
+                        msgError(json.msg);
+                    }
+                },
+                onLoadError:function() {
+                    msgError('加载数据出现时发生错误,请稍候重试...');
+                },
+                pagination:true,
+                loadMsg:'正在加载...'
+            });
+
+
+            initCombobox();
+
+            var role_code = '{{currentUserRole.role_code}}';
+            var org_code = '{{currentUser.user_org.org_code}}';
+            var login_account = '{{currentUser.login_account}}';
+
+            if (org_code != "000102" && login_account != "yangruofan") {
+                if (role_code == "001" || role_code == "sysadmin" || role_code == "002" || role_code == "005" || role_code == "007") {
+                    $('#org_codeSelectDiv').show();
+                } else {
+                    $('#org_codeSelectDiv').hide();
+                    $('#activeCss').css({
+                        "margin-left": "150px"
+                    });
+                }
+            } else {
+                $('#org_codeSelectDiv').show();
+            }
+
+        });
+    });
+
+</script>
+
+<script>
+    function doSearch() {
+        $('#simpledatatable').datagrid('reload',{alarmTitle:$("#sname").val()});
+    }
+
+    /**
+     * 获取用户在页面选择的比较条件，当条件不足时将使用默认条件
+     * @param dataType
+     * @returns rt_bizcity: jQuery, ownRt_bizname: jQuery, otherRt_bizname: jQuery, queryDate: jQuery, dataType:
+     */
+    function getViewData(dataType) {
+        var rt_bizcity = $('#rt_bizcity').combobox('getValue');
+        var ownRt_bizname = $('#ownRt_bizname').combobox('getValue');
+        var otherRt_bizname = $('#otherRt_bizname').combobox('getValues');
+        var queryDate = $('#queryDate').combobox('getValue');
+        if (rt_bizcity == "地区选择") {
+            rt_bizcity = "贵州";
+        }
+        if (ownRt_bizname == "自有业务选择") {
+            ownRt_bizname = "咪咕阅读";
+        }
+        if (otherRt_bizname[1] == undefined && otherRt_bizname[0] == '竞对业务选择') {
+            otherRt_bizname[0] = '起点图书';
+            otherRt_bizname[1] = 'QQ阅读';
+            otherRt_bizname[2] = '熊猫看书';
+            otherRt_bizname[3] = '掌阅iReader';
+        }
+        var date = new Date();
+        var ss = date.getFullYear() + "-" + (date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)) + "-" + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
+        if (queryDate == ss) {
+            queryDate = '2017-9-10';
+        }
+        var obj = {
+            rt_bizcity: rt_bizcity,
+            ownRt_bizname: ownRt_bizname,
+            otherRt_bizname: otherRt_bizname,
+            queryDate: queryDate
+        };
+        return obj;
+    }
+    
+    
+</script>

@@ -1,0 +1,1321 @@
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-body">
+                <div id="toolbar" class="row tbRow">
+                    <form id="searchFrom" class="form-inline" method="post">
+                        <div class="col-xs-12 col-md-12">
+                            <div data-options="region:'north',border:false" style="height:43px;padding:5px 0px 5px 0px;">
+                                地市：
+                                <select  name="nrt_city" id="inputCity" class="easyui-combobox" data-options="required:true,editable:false,panelHeight:260" style="width:70px;height:34px;">
+                                    <option value="贵州">贵州</option>
+                                    <option value="贵阳">贵阳</option>
+                                    <option value="遵义">遵义</option>
+                                    <option value="安顺">安顺</option>
+                                    <option value="都匀">黔南</option>
+                                    <option value="凯里">黔东南</option>
+                                    <option value="铜仁">铜仁</option>
+                                    <option value="毕节">毕节</option>
+                                    <option value="六盘水">六盘水</option>
+                                    <option value="兴义">黔西南</option>
+                                    <option value="贵安">贵安</option>
+                                </select>
+                                时间：<input id="inputDay" type="text" class="easyui-datebox" data-options="editable:false" style="height:34px;">
+                                <button class="btn btn-default" type="button" onclick="doSearch()"><i class="fa fa-search"></i>查询</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div id="cc" class="easyui-layout" data-options="fit:true,border:false" style="width: 800px; height:400px;background-color: #fbfbfb;">
+                    <div data-options="region:'center',border:false" style="overflow-x:hidden;overflow-y:hidden">
+                        <table id="daytable">
+                            <tr>
+                                <td><div style="font-size:20px;color:#000099;margin-top:20px;margin-left:20px;line-height:105px;text-align:center;border-radius:100px;border:2px solid #1e90ff;width: 115px; height:115px" id="miguRead";>咪咕阅读</div></td>
+                                <td><div style="font-size:60px;color:#FF0000;margin-top:30px;margin-left:10px;line-height:105px;text-align:center;border-left:1px solid #00bfff;border-bottom:1px solid #00bfff;border-right:1px solid #00bfff;border-top:1px solid #00bfff;;width: 115px; height:115px" id="readPoint";></div></td>
+                                <td><div style="margin-top:30px;text-align:center;border-bottom:1px solid #00bfff;border-right:1px solid #00bfff;border-top:1px solid #00bfff;width: 115px; height:115px" id="iReader";><div id="iReaderName" style="font-size:17px;line-height:75px;width: 115px; height:55px">掌阅iReader</div><div id="iReaderPoint" style="font-size:23px;color:#FF0000;width: 115px; height:65px"></div></div></td>
+                                <td><div style="border-left:none;margin-top:30px;text-align:center;border-bottom:1px solid #00bfff;border-right:1px solid #00bfff;border-top:1px solid #00bfff;width: 115px; height:115px" id="lazier";><div id="lazierName" style="font-size:17px;line-height:75px;width: 115px; height:55px">懒人听书</div><div id="lazierPoint" style="font-size:23px;color:#FF0000;width: 115px; height:65px"></div></div></td>
+                                <td><div style="font-size:20px;color:#cc3333;margin-top:30px;margin-left:70px;line-height:105px;text-align:center;border-radius:100px;border:2px solid #1e90ff;width: 115px; height:115px" id="miguCartoon";>咪咕动漫</div></td>
+                                <td><div style="font-size:60px;color:#FF0000;margin-top:30px;margin-left:10px;line-height:105px;text-align:center;border-left:1px solid #00bfff;border-bottom:1px solid #00bfff;border-right:1px solid #00bfff;border-top:1px solid #00bfff;;width: 115px; height:115px" id="cartoonPoint";></div></td>
+                                <td><div style="margin-top:30px;text-align:center;border-bottom:1px solid #00bfff;border-right:1px solid #00bfff;border-top:1px solid #00bfff;width: 115px; height:115px" id="quickCartoon";><div id="quickCartoonName" style="font-size:17px;line-height:75px;width: 115px; height:55px">快看漫画</div><div id="quickCartoonPoint" style="font-size:23px;color:#FF0000;width: 115px; height:65px"></div></div></td>
+                                <td><div style="border-left:none;margin-top:30px;text-align:center;border-bottom:1px solid #00bfff;border-right:1px solid #00bfff;border-top:1px solid #00bfff;width: 115px; height:115px" id="theFirst";><div id="theFirstName" style="font-size:17px;line-height:75px;width: 115px; height:55px">第一弹</div><div id="theFirstPoint" style="font-size:23px;color:#FF0000;width: 115px; height:65px"></div></div></td>
+                            </tr>
+                            <tr>
+                                <td><div style="font-size:20px;color:#009933;margin-top:30px;margin-left:20px;line-height:105px;text-align:center;border-radius:100px;border:2px solid #1e90ff;width: 115px; height:115px" id="miguGame";>咪咕游戏</div></td>
+                                <td><div style="font-size:60px;color:#FF0000;margin-top:30px;margin-left:10px;line-height:105px;text-align:center;border-left:1px solid #00bfff;border-bottom:1px solid #00bfff;border-right:1px solid #00bfff;border-top:1px solid #00bfff;;width: 115px; height:115px" id="gamePoint";></div></td>
+                                <td><div style="margin-top:30px;text-align:center;border-bottom:1px solid #00bfff;border-right:1px solid #00bfff;border-top:1px solid #00bfff;width: 115px; height:115px" id="huyaTV";><div id="huyaTVName" style="font-size:17px;line-height:75px;width: 115px; height:55px">虎牙直播</div><div id="huyaTVPoint" style="font-size:23px;color:#FF0000;width: 115px; height:65px"></div></div></td>
+                                <td><div style="border-left:none;margin-top:30px;text-align:center;border-bottom:1px solid #00bfff;border-right:1px solid #00bfff;border-top:1px solid #00bfff;width: 115px; height:115px" id="pandaTV";><div id="pandaTVName" style="font-size:17px;line-height:75px;width: 115px; height:55px">熊猫TV</div><div id="pandaTVPoint" style="font-size:23px;color:#FF0000;width: 115px; height:65px"></div></div></td>
+                                <td><div style="font-size:20px;color:#8b4513;margin-top:30px;margin-left:70px;line-height:105px;text-align:center;border-radius:100px;border:2px solid #1e90ff;width: 115px; height:115px" id="miguMusic";>咪咕音乐</div></td>
+                                <td><div style="font-size:60px;color:#FF0000;margin-top:30px;margin-left:10px;line-height:105px;text-align:center;border-left:1px solid #00bfff;border-bottom:1px solid #00bfff;border-right:1px solid #00bfff;border-top:1px solid #00bfff;;width: 115px; height:115px" id="musicPoint";></div></td>
+                                <td><div style="margin-top:30px;text-align:center;border-bottom:1px solid #00bfff;border-right:1px solid #00bfff;border-top:1px solid #00bfff;width: 115px; height:115px" id="QQMusic";><div id="QQMusicName" style="font-size:17px;line-height:75px;width: 115px; height:55px">QQ音乐</div><div id="QQMusicPoint" style="font-size:23px;color:#FF0000;width: 115px; height:65px"></div></div></td>
+                                <td><div style="border-left:none;margin-top:30px;text-align:center;border-bottom:1px solid #00bfff;border-right:1px solid #00bfff;border-top:1px solid #00bfff;width: 115px; height:115px" id="kugoMusic";><div id="kugoMusicName" style="font-size:17px;line-height:75px;width: 115px; height:55px">酷狗音乐</div><div id="kugoMusicPoint" style="font-size:23px;color:#FF0000;width: 115px; height:65px"></div></div></td>
+                            </tr>
+                            <tr>
+                                <td><div style="font-size:20px;color:#b8860b;margin-top:30px;margin-left:20px;line-height:105px;text-align:center;border-radius:100px;border:2px solid #1e90ff;width: 115px; height:115px" id="lingXi";>灵犀</div></td>
+                                <td><div style="font-size:60px;color:#FF0000;margin-top:30px;margin-left:10px;line-height:105px;text-align:center;border-left:1px solid #00bfff;border-bottom:1px solid #00bfff;border-right:1px solid #00bfff;border-top:1px solid #00bfff;;width: 115px; height:115px" id="lingxiPoint";></div></td>
+                                <td><div style="margin-top:30px;text-align:center;border-bottom:1px solid #00bfff;border-right:1px solid #00bfff;border-top:1px solid #00bfff;width: 115px; height:115px" id="liReader";><div id="liReaderName" style="font-size:17px;line-height:75px;width: 115px; height:55px">掌阅iReader</div><div id="liReaderPoint" style="font-size:23px;color:#FF0000;width: 115px; height:65px"></div></div></td>
+                                <td><div style="border-left:none;margin-top:30px;text-align:center;border-bottom:1px solid #00bfff;border-right:1px solid #00bfff;border-top:1px solid #00bfff;width: 115px; height:115px" id="llazier";><div id="llazierName" style="font-size:17px;line-height:75px;width: 115px; height:55px">懒人听书</div><div id="llazierPoint" style="font-size:23px;color:#FF0000;width: 115px; height:65px"></div></div></td>
+                                <td><div style="font-size:20px;color:#666666;margin-top:30px;margin-left:70px;line-height:105px;text-align:center;border-radius:100px;border:2px solid #1e90ff;width: 115px; height:115px" id="miguVideo";>咪咕视频</div></td>
+                                <td><div style="font-size:60px;color:#FF0000;margin-top:30px;margin-left:10px;line-height:105px;text-align:center;border-left:1px solid #00bfff;border-bottom:1px solid #00bfff;border-right:1px solid #00bfff;border-top:1px solid #00bfff;;width: 115px; height:115px" id="videoPoint";></div></td>
+                                <td><div style="margin-top:30px;line-height:200px;text-align:center;border-bottom:1px solid #00bfff;border-right:1px solid #00bfff;border-top:1px solid #00bfff;width: 115px; height:115px" id="inputAge";></div></td>
+                                <td><div style="border-left:none;margin-top:30px;line-height:92px;text-align:center;border-bottom:1px solid #00bfff;border-right:1px solid #00bfff;border-top:1px solid #00bfff;width: 115px; height:115px" id="inputAge";></div></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    // 关闭窗口
+    function closeDialog() {
+        $('#myModal').dialog('close');
+        clear();
+    }
+    // 打开页面
+    function openPage(title, value, callback) {
+        $('#myModal').show();
+        $('#myModal').mydialog({
+            title:title,
+            width: 700,
+            height: 500,
+            top:100,
+            modal: true,
+            myButtons:[
+                {
+                    text:'确定',
+                    btnCls:'btn btn-blue',
+                    handler:function(){
+                        callback(value);
+                    }
+                },
+                {
+                    text:'关闭',
+                    btnCls:'btn btn-danger',
+                    handler:function(){
+                        closeDialog();
+                    }
+                }
+            ]
+        });
+    }
+
+    function aSearch() {
+
+        $.ajax({
+            url: '{{projcfg.appurl}}/api/nrt/nrt_route/bp_overall',
+            type: 'get',
+            data: {city:$('#inputCity').combobox('getValue'),time_day:$('#inputDay').combobox('getValue')},
+            success: function (data) {
+                if (data.success) {
+                    var retList= data.data;
+                    var readPoint;
+                    var cartoonPoint;
+                    var gamePoint;
+                    var musicPoint;
+                    var lingxiPoint;
+                    var videoPoint;
+                    var iReaderPoint;
+                    var lazierPoint;
+                    var liReaderPoint;
+                    var llazierPoint;
+                    var quickCartoonPoint;
+                    var theFirstNamePoint;
+                    var huyaTVPoint;
+                    var pandaTVPoint;
+                    var QQMusicPoint;
+                    var kugoMusicPoint;
+                    for(i=1,j=0;i<=retList.length;i++,j++){
+                        if(retList[j].nrtday_bizname == '咪咕阅读'){
+                            var readPoint_httpsuccrate;
+                            var readPoint_httpavgresptime;
+                            var readPoint_httpdlrate;
+                            readPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                            if( retList[j].nrtday_httpavgresptime<140 ){
+                                readPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                            }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                readPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/5.5;
+                            }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                readPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                            }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                readPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                            }else{
+                                readPoint_httpavgresptime = 0;
+                            }
+                            if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                readPoint_httpdlrate = 100;
+                            }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                readPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                            }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                readPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                            }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                readPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                            }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                readPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                            }else{
+                                readPoint_httpdlrate = 0;
+                            }
+                            readPoint = readPoint_httpsuccrate*0.4 + readPoint_httpavgresptime*0.3 + readPoint_httpdlrate*0.3;
+                        }
+                        if(retList[j].nrtday_bizname == '咪咕动漫'){
+                            var cartoonPoint_httpsuccrate;
+                            var cartoonPoint_httpavgresptime;
+                            var cartoonPoint_httpdlrate;
+                            cartoonPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                            if( retList[j].nrtday_httpavgresptime<140 ){
+                                cartoonPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                            }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                cartoonPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/4.5;
+                            }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                cartoonPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                            }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                cartoonPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                            }else{
+                                cartoonPoint_httpavgresptime = 0;
+                            }
+                            if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                cartoonPoint_httpdlrate = 100;
+                            }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                cartoonPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                            }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                cartoonPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                            }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                cartoonPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                            }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                cartoonPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                            }else{
+                                cartoonPoint_httpdlrate = 0;
+                            }
+                            cartoonPoint = cartoonPoint_httpsuccrate*0.4 + cartoonPoint_httpavgresptime*0.3 + cartoonPoint_httpdlrate*0.3;
+                        }
+                        if(retList[j].nrtday_bizname == '咪咕游戏'){
+                            var gamePoint_httpsuccrate;
+                            var gamePoint_httpavgresptime;
+                            var gamePoint_httpdlrate;
+                            gamePoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                            if( retList[j].nrtday_httpavgresptime<140 ){
+                                gamePoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                            }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                gamePoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/4.5;
+                            }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                gamePoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                            }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                gamePoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                            }else{
+                                gamePoint_httpavgresptime = 0;
+                            }
+                            if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                gamePoint_httpdlrate = 100;
+                            }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                gamePoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                            }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                gamePoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                            }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                gamePoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                            }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                gamePoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                            }else{
+                                gamePoint_httpdlrate = 0;
+                            }
+                            gamePoint = gamePoint_httpsuccrate*0.4 + gamePoint_httpavgresptime*0.3 + gamePoint_httpdlrate*0.3;
+                        }
+                        if(retList[j].nrtday_bizname == '咪咕音乐'){
+                            var musicPoint_httpsuccrate;
+                            var musicPoint_httpavgresptime;
+                            var musicPoint_httpdlrate;
+                            musicPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                            if( retList[j].nrtday_httpavgresptime<140 ){
+                                musicPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                            }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                musicPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/4.5;
+                            }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                musicPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                            }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                musicPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                            }else{
+                                musicPoint_httpavgresptime = 0;
+                            }
+                            if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                musicPoint_httpdlrate = 100;
+                            }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                musicPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                            }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                musicPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                            }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                musicPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                            }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                musicPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                            }else{
+                                musicPoint_httpdlrate = 0;
+                            }
+                            musicPoint = musicPoint_httpsuccrate*0.4 + musicPoint_httpavgresptime*0.3 + musicPoint_httpdlrate*0.3;
+                        }
+                        if(retList[j].nrtday_bizname == '灵犀'){
+                            var lingxiPoint_httpsuccrate;
+                            var lingxiPoint_httpavgresptime;
+                            var lingxiPoint_httpdlrate;
+                            lingxiPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                            if( retList[j].nrtday_httpavgresptime<140 ){
+                                lingxiPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                            }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                lingxiPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/4.5;
+                            }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                lingxiPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                            }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                lingxiPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                            }else{
+                                lingxiPoint_httpavgresptime = 0;
+                            }
+                            if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                lingxiPoint_httpdlrate = 100;
+                            }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                lingxiPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                            }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                lingxiPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                            }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                lingxiPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                            }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                lingxiPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                            }else{
+                                lingxiPoint_httpdlrate = 0;
+                            }
+                            lingxiPoint = lingxiPoint_httpsuccrate*0.4 + lingxiPoint_httpavgresptime*0.3 + lingxiPoint_httpdlrate*0.3;
+                        }
+                        if(retList[j].nrtday_bizname == '咪咕视频'){
+                            var videoPoint_httpsuccrate;
+                            var videoPoint_httpavgresptime;
+                            var videoPoint_httpdlrate;
+                            videoPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                            if( retList[j].nrtday_httpavgresptime<140 ){
+                                videoPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                            }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                videoPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/4.5;
+                            }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                videoPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                            }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                videoPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                            }else{
+                                videoPoint_httpavgresptime = 0;
+                            }
+                            if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                videoPoint_httpdlrate = 100;
+                            }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                videoPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                            }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                videoPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                            }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                videoPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                            }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                videoPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                            }else{
+                                videoPoint_httpdlrate = 0;
+                            }
+                            videoPoint = videoPoint_httpsuccrate*0.4 + videoPoint_httpavgresptime*0.3 + videoPoint_httpdlrate*0.3;
+                        }
+                        if(retList[j].nrtday_bizname == '掌阅iReader'){
+                            var iReaderPoint_httpsuccrate;
+                            var iReaderPoint_httpavgresptime;
+                            var iReaderPoint_httpdlrate;
+                            iReaderPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                            if( retList[j].nrtday_httpavgresptime<140 ){
+                                iReaderPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                            }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                iReaderPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/5.5;
+                            }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                iReaderPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                            }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                iReaderPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                            }else{
+                                iReaderPoint_httpavgresptime = 0;
+                            }
+                            if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                iReaderPoint_httpdlrate = 100;
+                            }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                iReaderPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                            }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                iReaderPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                            }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                iReaderPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                            }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                iReaderPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                            }else{
+                                iReaderPoint_httpdlrate = 0;
+                            }
+                            iReaderPoint = iReaderPoint_httpsuccrate*0.4 + iReaderPoint_httpavgresptime*0.3 + iReaderPoint_httpdlrate*0.3;
+                            liReaderPoint = iReaderPoint;
+                        }
+                        if(retList[j].nrtday_bizname == '懒人听书'){
+                            var lazierPoint_httpsuccrate;
+                            var lazierPoint_httpavgresptime;
+                            var lazierPoint_httpdlrate;
+                            lazierPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                            if( retList[j].nrtday_httpavgresptime<140 ){
+                                lazierPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                            }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                lazierPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/5.5;
+                            }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                lazierPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                            }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                lazierPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                            }else{
+                                lazierPoint_httpavgresptime = 0;
+                            }
+                            if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                lazierPoint_httpdlrate = 100;
+                            }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                lazierPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                            }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                lazierPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                            }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                lazierPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                            }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                lazierPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                            }else{
+                                lazierPoint_httpdlrate = 0;
+                            }
+                            lazierPoint = lazierPoint_httpsuccrate*0.4 + lazierPoint_httpavgresptime*0.3 + lazierPoint_httpdlrate*0.3;
+                            llazierPoint = lazierPoint;
+                        }
+                        if(retList[j].nrtday_bizname == '快看漫画'){
+                            var quickCartoonPoint_httpsuccrate;
+                            var quickCartoonPoint_httpavgresptime;
+                            var quickCartoonPoint_httpdlrate;
+                            quickCartoonPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                            if( retList[j].nrtday_httpavgresptime<140 ){
+                                quickCartoonPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                            }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                quickCartoonPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/5.5;
+                            }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                quickCartoonPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                            }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                quickCartoonPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                            }else{
+                                quickCartoonPoint_httpavgresptime = 0;
+                            }
+                            if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                quickCartoonPoint_httpdlrate = 100;
+                            }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                quickCartoonPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                            }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                quickCartoonPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                            }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                quickCartoonPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                            }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                quickCartoonPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                            }else{
+                                quickCartoonPoint_httpdlrate = 0;
+                            }
+                            quickCartoonPoint = quickCartoonPoint_httpsuccrate*0.4 + quickCartoonPoint_httpavgresptime*0.3 + quickCartoonPoint_httpdlrate*0.3;
+                        }
+                        if(retList[j].nrtday_bizname == '第一弹'){
+                            var theFirstNamePoint_httpsuccrate;
+                            var theFirstNamePoint_httpavgresptime;
+                            var theFirstNamePoint_httpdlrate;
+                            theFirstNamePoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                            if( retList[j].nrtday_httpavgresptime<140 ){
+                                theFirstNamePoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                            }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                theFirstNamePoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/5.5;
+                            }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                theFirstNamePoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                            }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                theFirstNamePoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                            }else{
+                                theFirstNamePoint_httpavgresptime = 0;
+                            }
+                            if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                theFirstNamePoint_httpdlrate = 100;
+                            }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                theFirstNamePoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                            }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                theFirstNamePoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                            }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                theFirstNamePoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                            }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                theFirstNamePoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                            }else{
+                                theFirstNamePoint_httpdlrate = 0;
+                            }
+                            theFirstNamePoint = theFirstNamePoint_httpsuccrate*0.4 + theFirstNamePoint_httpavgresptime*0.3 + theFirstNamePoint_httpdlrate*0.3;
+                        }
+                        if(retList[j].nrtday_bizname == '虎牙直播'){
+                            var huyaTVPoint_httpsuccrate;
+                            var huyaTVPoint_httpavgresptime;
+                            var huyaTVPoint_httpdlrate;
+                            huyaTVPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                            if( retList[j].nrtday_httpavgresptime<140 ){
+                                huyaTVPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                            }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                huyaTVPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/5.5;
+                            }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                huyaTVPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                            }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                huyaTVPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                            }else{
+                                huyaTVPoint_httpavgresptime = 0;
+                            }
+                            if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                huyaTVPoint_httpdlrate = 100;
+                            }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                huyaTVPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                            }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                huyaTVPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                            }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                huyaTVPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                            }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                huyaTVPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                            }else{
+                                huyaTVPoint_httpdlrate = 0;
+                            }
+                            huyaTVPoint = huyaTVPoint_httpsuccrate*0.4 + huyaTVPoint_httpavgresptime*0.3 + huyaTVPoint_httpdlrate*0.3;
+                        }
+                        if(retList[j].nrtday_bizname == '熊猫TV'){
+                            var pandaTVPoint_httpsuccrate;
+                            var pandaTVPoint_httpavgresptime;
+                            var pandaTVPoint_httpdlrate;
+                            pandaTVPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                            if( retList[j].nrtday_httpavgresptime<140 ){
+                                pandaTVPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                            }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                pandaTVPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/5.5;
+                            }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                pandaTVPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                            }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                pandaTVPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                            }else{
+                                pandaTVPoint_httpavgresptime = 0;
+                            }
+                            if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                pandaTVPoint_httpdlrate = 100;
+                            }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                pandaTVPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                            }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                pandaTVPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                            }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                pandaTVPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                            }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                pandaTVPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                            }else{
+                                pandaTVPoint_httpdlrate = 0;
+                            }
+                            pandaTVPoint = pandaTVPoint_httpsuccrate*0.4 + pandaTVPoint_httpavgresptime*0.3 + pandaTVPoint_httpdlrate*0.3;
+                        }
+                        if(retList[j].nrtday_bizname == 'QQ音乐'){
+                            var QQMusicPoint_httpsuccrate;
+                            var QQMusicPoint_httpavgresptime;
+                            var QQMusicPoint_httpdlrate;
+                            QQMusicPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                            if( retList[j].nrtday_httpavgresptime<140 ){
+                                QQMusicPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                            }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                QQMusicPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/5.5;
+                            }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                QQMusicPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                            }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                QQMusicPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                            }else{
+                                QQMusicPoint_httpavgresptime = 0;
+                            }
+                            if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                QQMusicPoint_httpdlrate = 100;
+                            }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                QQMusicPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                            }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                QQMusicPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                            }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                QQMusicPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                            }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                QQMusicPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                            }else{
+                                QQMusicPoint_httpdlrate = 0;
+                            }
+                            QQMusicPoint = QQMusicPoint_httpsuccrate*0.4 + QQMusicPoint_httpavgresptime*0.3 + QQMusicPoint_httpdlrate*0.3;
+                        }
+                        if(retList[j].nrtday_bizname == '酷狗音乐'){
+                            var kugoMusicPoint_httpsuccrate;
+                            var kugoMusicPoint_httpavgresptime;
+                            var kugoMusicPoint_httpdlrate;
+                            kugoMusicPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                            if( retList[j].nrtday_httpavgresptime<140 ){
+                                kugoMusicPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                            }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                kugoMusicPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/5.5;
+                            }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                kugoMusicPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                            }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                kugoMusicPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                            }else{
+                                kugoMusicPoint_httpavgresptime = 0;
+                            }
+                            if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                kugoMusicPoint_httpdlrate = 100;
+                            }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                kugoMusicPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                            }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                kugoMusicPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                            }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                kugoMusicPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                            }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                kugoMusicPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                            }else{
+                                kugoMusicPoint_httpdlrate = 0;
+                            }
+                            kugoMusicPoint = kugoMusicPoint_httpsuccrate*0.4 + kugoMusicPoint_httpavgresptime*0.3 + kugoMusicPoint_httpdlrate*0.3;
+                        }
+                    }
+                    if( readPoint && readPoint != ''){
+                        $("#readPoint").html(readPoint.toFixed(0));
+                    }else{
+                        $("#readPoint").html('');
+                    }
+                    if( cartoonPoint && cartoonPoint != ''){
+                        $("#cartoonPoint").html(cartoonPoint.toFixed(0));
+                    }else{
+                        $("#cartoonPoint").html('');
+                    }
+                    if( gamePoint && gamePoint != ''){
+                        $("#gamePoint").html(gamePoint.toFixed(0));
+                    }else{
+                        $("#gamePoint").html('');
+                    }
+                    if( musicPoint && musicPoint != ''){
+                        $("#musicPoint").html(musicPoint.toFixed(0));
+                    }else{
+                        $("#musicPoint").html('');
+                    }
+                    if( lingxiPoint && lingxiPoint != ''){
+                        $("#lingxiPoint").html(lingxiPoint.toFixed(0));
+                    }else{
+                        $("#lingxiPoint").html('');
+                    }
+                    if( videoPoint && videoPoint != ''){
+                        $("#videoPoint").html(videoPoint.toFixed(0));
+                    }else{
+                        $("#videoPoint").html('');
+                    }
+                    if( iReaderPoint && iReaderPoint != ''){
+                        $("#iReaderPoint").html(iReaderPoint.toFixed(0));
+                    }else{
+                        $("#iReaderPoint").html('');
+                    }
+                    if( lazierPoint && lazierPoint != ''){
+                        $("#lazierPoint").html(lazierPoint.toFixed(0));
+                    }else{
+                        $("#lazierPoint").html('');
+                    }
+                    if( liReaderPoint && liReaderPoint != ''){
+                        $("#liReaderPoint").html(iReaderPoint.toFixed(0));
+                    }else{
+                        $("#liReaderPoint").html('');
+                    }
+                    if( llazierPoint && llazierPoint != ''){
+                        $("#llazierPoint").html(lazierPoint.toFixed(0));
+                    }else{
+                        $("#llazierPoint").html('');
+                    }
+                    if( quickCartoonPoint && quickCartoonPoint != ''){
+                        $("#quickCartoonPoint").html(quickCartoonPoint.toFixed(0));
+                    }else{
+                        $("#quickCartoonPoint").html('');
+                    }
+                    if( theFirstNamePoint && theFirstNamePoint != ''){
+                        $("#theFirstPoint").html(theFirstNamePoint.toFixed(0));
+                    }else{
+                        $("#theFirstPoint").html('');
+                    }
+                    if( huyaTVPoint && huyaTVPoint != ''){
+                        $("#huyaTVPoint").html(huyaTVPoint.toFixed(0));
+                    }else{
+                        $("#huyaTVPoint").html('');
+                    }
+                    if( pandaTVPoint && pandaTVPoint != ''){
+                        $("#pandaTVPoint").html(pandaTVPoint.toFixed(0));
+                    }else{
+                        $("#pandaTVPoint").html('');
+                    }
+                    if( QQMusicPoint && QQMusicPoint != ''){
+                        $("#QQMusicPoint").html(QQMusicPoint.toFixed(0));
+                    }else{
+                        $("#QQMusicPoint").html('');
+                    }
+                    if( kugoMusicPoint && kugoMusicPoint != ''){
+                        $("#kugoMusicPoint").html(kugoMusicPoint.toFixed(0));
+                    }else{
+                        $("#kugoMusicPoint").html('');
+                    }
+                }
+            }
+        });
+    }
+    $(document).ready(function() {
+        $(function(){
+            $.ajax({
+                url: '{{projcfg.appurl}}/api/nrt/nrt_route/bp_overall',
+                type: 'get',
+                data: {city:'贵州',time_day:'2017-05-02'},
+                success: function (data) {
+                    if (data.success) {
+                        var retList= data.data;
+                        var readPoint;
+                        var cartoonPoint;
+                        var gamePoint;
+                        var musicPoint;
+                        var lingxiPoint;
+                        var videoPoint;
+                        var iReaderPoint;
+                        var lazierPoint;
+                        var liReaderPoint;
+                        var llazierPoint;
+                        var quickCartoonPoint;
+                        var theFirstNamePoint;
+                        var huyaTVPoint;
+                        var pandaTVPoint;
+                        var QQMusicPoint;
+                        var kugoMusicPoint;
+                        for(i=1,j=0;i<=retList.length;i++,j++){
+                            if(retList[j].nrtday_bizname == '咪咕阅读'){
+                                var readPoint_httpsuccrate;
+                                var readPoint_httpavgresptime;
+                                var readPoint_httpdlrate;
+                                readPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                                if( retList[j].nrtday_httpavgresptime<140 ){
+                                    readPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                                }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                    readPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/5.5;
+                                }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                    readPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                                }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                    readPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                                }else{
+                                    readPoint_httpavgresptime = 0;
+                                }
+                                if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                    readPoint_httpdlrate = 100;
+                                }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                    readPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                                }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                    readPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                                }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                    readPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                                }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                    readPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                                }else{
+                                    readPoint_httpdlrate = 0;
+                                }
+                                readPoint = readPoint_httpsuccrate*0.4 + readPoint_httpavgresptime*0.3 + readPoint_httpdlrate*0.3;
+                            }
+                            if(retList[j].nrtday_bizname == '咪咕动漫'){
+                                var cartoonPoint_httpsuccrate;
+                                var cartoonPoint_httpavgresptime;
+                                var cartoonPoint_httpdlrate;
+                                cartoonPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                                if( retList[j].nrtday_httpavgresptime<140 ){
+                                    cartoonPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                                }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                    cartoonPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/4.5;
+                                }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                    cartoonPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                                }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                    cartoonPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                                }else{
+                                    cartoonPoint_httpavgresptime = 0;
+                                }
+                                if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                    cartoonPoint_httpdlrate = 100;
+                                }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                    cartoonPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                                }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                    cartoonPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                                }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                    cartoonPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                                }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                    cartoonPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                                }else{
+                                    cartoonPoint_httpdlrate = 0;
+                                }
+                                cartoonPoint = cartoonPoint_httpsuccrate*0.4 + cartoonPoint_httpavgresptime*0.3 + cartoonPoint_httpdlrate*0.3;
+                            }
+                            if(retList[j].nrtday_bizname == '咪咕游戏'){
+                                var gamePoint_httpsuccrate;
+                                var gamePoint_httpavgresptime;
+                                var gamePoint_httpdlrate;
+                                gamePoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                                if( retList[j].nrtday_httpavgresptime<140 ){
+                                    gamePoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                                }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                    gamePoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/4.5;
+                                }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                    gamePoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                                }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                    gamePoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                                }else{
+                                    gamePoint_httpavgresptime = 0;
+                                }
+                                if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                    gamePoint_httpdlrate = 100;
+                                }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                    gamePoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                                }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                    gamePoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                                }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                    gamePoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                                }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                    gamePoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                                }else{
+                                    gamePoint_httpdlrate = 0;
+                                }
+                                gamePoint = gamePoint_httpsuccrate*0.4 + gamePoint_httpavgresptime*0.3 + gamePoint_httpdlrate*0.3;
+                            }
+                            if(retList[j].nrtday_bizname == '咪咕音乐'){
+                                var musicPoint_httpsuccrate;
+                                var musicPoint_httpavgresptime;
+                                var musicPoint_httpdlrate;
+                                musicPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                                if( retList[j].nrtday_httpavgresptime<140 ){
+                                    musicPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                                }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                    musicPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/4.5;
+                                }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                    musicPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                                }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                    musicPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                                }else{
+                                    musicPoint_httpavgresptime = 0;
+                                }
+                                if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                    musicPoint_httpdlrate = 100;
+                                }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                    musicPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                                }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                    musicPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                                }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                    musicPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                                }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                    musicPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                                }else{
+                                    musicPoint_httpdlrate = 0;
+                                }
+                                musicPoint = musicPoint_httpsuccrate*0.4 + musicPoint_httpavgresptime*0.3 + musicPoint_httpdlrate*0.3;
+                            }
+                            if(retList[j].nrtday_bizname == '灵犀'){
+                                var lingxiPoint_httpsuccrate;
+                                var lingxiPoint_httpavgresptime;
+                                var lingxiPoint_httpdlrate;
+                                lingxiPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                                if( retList[j].nrtday_httpavgresptime<140 ){
+                                    lingxiPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                                }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                    lingxiPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/4.5;
+                                }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                    lingxiPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                                }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                    lingxiPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                                }else{
+                                    lingxiPoint_httpavgresptime = 0;
+                                }
+                                if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                    lingxiPoint_httpdlrate = 100;
+                                }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                    lingxiPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                                }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                    lingxiPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                                }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                    lingxiPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                                }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                    lingxiPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                                }else{
+                                    lingxiPoint_httpdlrate = 0;
+                                }
+                                lingxiPoint = lingxiPoint_httpsuccrate*0.4 + lingxiPoint_httpavgresptime*0.3 + lingxiPoint_httpdlrate*0.3;
+                            }
+                            if(retList[j].nrtday_bizname == '咪咕视频'){
+                                var videoPoint_httpsuccrate;
+                                var videoPoint_httpavgresptime;
+                                var videoPoint_httpdlrate;
+                                videoPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                                if( retList[j].nrtday_httpavgresptime<140 ){
+                                    videoPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                                }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                    videoPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/4.5;
+                                }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                    videoPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                                }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                    videoPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                                }else{
+                                    videoPoint_httpavgresptime = 0;
+                                }
+                                if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                    videoPoint_httpdlrate = 100;
+                                }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                    videoPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                                }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                    videoPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                                }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                    videoPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                                }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                    videoPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                                }else{
+                                    videoPoint_httpdlrate = 0;
+                                }
+                                videoPoint = videoPoint_httpsuccrate*0.4 + videoPoint_httpavgresptime*0.3 + videoPoint_httpdlrate*0.3;
+                            }
+                            if(retList[j].nrtday_bizname == '掌阅iReader'){
+                                var iReaderPoint_httpsuccrate;
+                                var iReaderPoint_httpavgresptime;
+                                var iReaderPoint_httpdlrate;
+                                iReaderPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                                if( retList[j].nrtday_httpavgresptime<140 ){
+                                    iReaderPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                                }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                    iReaderPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/5.5;
+                                }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                    iReaderPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                                }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                    iReaderPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                                }else{
+                                    iReaderPoint_httpavgresptime = 0;
+                                }
+                                if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                    iReaderPoint_httpdlrate = 100;
+                                }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                    iReaderPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                                }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                    iReaderPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                                }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                    iReaderPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                                }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                    iReaderPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                                }else{
+                                    iReaderPoint_httpdlrate = 0;
+                                }
+                                iReaderPoint = iReaderPoint_httpsuccrate*0.4 + iReaderPoint_httpavgresptime*0.3 + iReaderPoint_httpdlrate*0.3;
+                                liReaderPoint = iReaderPoint;
+                            }
+                            if(retList[j].nrtday_bizname == '懒人听书'){
+                                var lazierPoint_httpsuccrate;
+                                var lazierPoint_httpavgresptime;
+                                var lazierPoint_httpdlrate;
+                                lazierPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                                if( retList[j].nrtday_httpavgresptime<140 ){
+                                    lazierPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                                }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                    lazierPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/5.5;
+                                }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                    lazierPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                                }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                    lazierPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                                }else{
+                                    lazierPoint_httpavgresptime = 0;
+                                }
+                                if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                    lazierPoint_httpdlrate = 100;
+                                }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                    lazierPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                                }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                    lazierPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                                }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                    lazierPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                                }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                    lazierPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                                }else{
+                                    lazierPoint_httpdlrate = 0;
+                                }
+                                lazierPoint = lazierPoint_httpsuccrate*0.4 + lazierPoint_httpavgresptime*0.3 + lazierPoint_httpdlrate*0.3;
+                                llazierPoint = lazierPoint;
+                            }
+                            if(retList[j].nrtday_bizname == '快看漫画'){
+                                var quickCartoonPoint_httpsuccrate;
+                                var quickCartoonPoint_httpavgresptime;
+                                var quickCartoonPoint_httpdlrate;
+                                quickCartoonPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                                if( retList[j].nrtday_httpavgresptime<140 ){
+                                    quickCartoonPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                                }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                    quickCartoonPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/5.5;
+                                }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                    quickCartoonPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                                }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                    quickCartoonPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                                }else{
+                                    quickCartoonPoint_httpavgresptime = 0;
+                                }
+                                if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                    quickCartoonPoint_httpdlrate = 100;
+                                }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                    quickCartoonPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                                }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                    quickCartoonPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                                }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                    quickCartoonPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                                }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                    quickCartoonPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                                }else{
+                                    quickCartoonPoint_httpdlrate = 0;
+                                }
+                                quickCartoonPoint = quickCartoonPoint_httpsuccrate*0.4 + quickCartoonPoint_httpavgresptime*0.3 + quickCartoonPoint_httpdlrate*0.3;
+                            }
+                            if(retList[j].nrtday_bizname == '第一弹'){
+                                var theFirstNamePoint_httpsuccrate;
+                                var theFirstNamePoint_httpavgresptime;
+                                var theFirstNamePoint_httpdlrate;
+                                theFirstNamePoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                                if( retList[j].nrtday_httpavgresptime<140 ){
+                                    theFirstNamePoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                                }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                    theFirstNamePoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/5.5;
+                                }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                    theFirstNamePoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                                }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                    theFirstNamePoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                                }else{
+                                    theFirstNamePoint_httpavgresptime = 0;
+                                }
+                                if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                    theFirstNamePoint_httpdlrate = 100;
+                                }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                    theFirstNamePoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                                }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                    theFirstNamePoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                                }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                    theFirstNamePoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                                }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                    theFirstNamePoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                                }else{
+                                    theFirstNamePoint_httpdlrate = 0;
+                                }
+                                theFirstNamePoint = theFirstNamePoint_httpsuccrate*0.4 + theFirstNamePoint_httpavgresptime*0.3 + theFirstNamePoint_httpdlrate*0.3;
+                            }
+                            if(retList[j].nrtday_bizname == '虎牙直播'){
+                                var huyaTVPoint_httpsuccrate;
+                                var huyaTVPoint_httpavgresptime;
+                                var huyaTVPoint_httpdlrate;
+                                huyaTVPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                                if( retList[j].nrtday_httpavgresptime<140 ){
+                                    huyaTVPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                                }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                    huyaTVPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/5.5;
+                                }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                    huyaTVPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                                }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                    huyaTVPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                                }else{
+                                    huyaTVPoint_httpavgresptime = 0;
+                                }
+                                if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                    huyaTVPoint_httpdlrate = 100;
+                                }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                    huyaTVPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                                }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                    huyaTVPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                                }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                    huyaTVPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                                }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                    huyaTVPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                                }else{
+                                    huyaTVPoint_httpdlrate = 0;
+                                }
+                                huyaTVPoint = huyaTVPoint_httpsuccrate*0.4 + huyaTVPoint_httpavgresptime*0.3 + huyaTVPoint_httpdlrate*0.3;
+                            }
+                            if(retList[j].nrtday_bizname == '熊猫TV'){
+                                var pandaTVPoint_httpsuccrate;
+                                var pandaTVPoint_httpavgresptime;
+                                var pandaTVPoint_httpdlrate;
+                                pandaTVPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                                if( retList[j].nrtday_httpavgresptime<140 ){
+                                    pandaTVPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                                }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                    pandaTVPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/5.5;
+                                }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                    pandaTVPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                                }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                    pandaTVPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                                }else{
+                                    pandaTVPoint_httpavgresptime = 0;
+                                }
+                                if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                    pandaTVPoint_httpdlrate = 100;
+                                }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                    pandaTVPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                                }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                    pandaTVPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                                }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                    pandaTVPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                                }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                    pandaTVPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                                }else{
+                                    pandaTVPoint_httpdlrate = 0;
+                                }
+                                pandaTVPoint = pandaTVPoint_httpsuccrate*0.4 + pandaTVPoint_httpavgresptime*0.3 + pandaTVPoint_httpdlrate*0.3;
+                            }
+                            if(retList[j].nrtday_bizname == 'QQ音乐'){
+                                var QQMusicPoint_httpsuccrate;
+                                var QQMusicPoint_httpavgresptime;
+                                var QQMusicPoint_httpdlrate;
+                                QQMusicPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                                if( retList[j].nrtday_httpavgresptime<140 ){
+                                    QQMusicPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                                }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                    QQMusicPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/5.5;
+                                }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                    QQMusicPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                                }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                    QQMusicPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                                }else{
+                                    QQMusicPoint_httpavgresptime = 0;
+                                }
+                                if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                    QQMusicPoint_httpdlrate = 100;
+                                }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                    QQMusicPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                                }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                    QQMusicPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                                }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                    QQMusicPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                                }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                    QQMusicPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                                }else{
+                                    QQMusicPoint_httpdlrate = 0;
+                                }
+                                QQMusicPoint = QQMusicPoint_httpsuccrate*0.4 + QQMusicPoint_httpavgresptime*0.3 + QQMusicPoint_httpdlrate*0.3;
+                            }
+                            if(retList[j].nrtday_bizname == '酷狗音乐'){
+                                var kugoMusicPoint_httpsuccrate;
+                                var kugoMusicPoint_httpavgresptime;
+                                var kugoMusicPoint_httpdlrate;
+                                kugoMusicPoint_httpsuccrate = retList[j].nrtday_httpsuccrate;
+                                if( retList[j].nrtday_httpavgresptime<140 ){
+                                    kugoMusicPoint_httpavgresptime = 100 - retList[j].nrtday_httpavgresptime/14;
+                                }else if( retList[j].nrtday_httpavgresptime>= 140&& retList[j].nrtday_httpavgresptime <195 ){
+                                    kugoMusicPoint_httpavgresptime = 90 - ( retList[j].nrtday_httpavgresptime - 140 )/5.5;
+                                }else if( retList[j].nrtday_httpavgresptime>= 195&& retList[j].nrtday_httpavgresptime <270 ){
+                                    kugoMusicPoint_httpavgresptime = 80 - ( retList[j].nrtday_httpavgresptime - 195)/3.75;
+                                }else if( retList[j].nrtday_httpavgresptime>= 270&& retList[j].nrtday_httpavgresptime <500 ){
+                                    kugoMusicPoint_httpavgresptime = 60 - ( retList[j].nrtday_httpavgresptime - 270)/11.5;
+                                }else{
+                                    kugoMusicPoint_httpavgresptime = 0;
+                                }
+                                if( retList[j].nrtday_httpdlrate >= 6000 ){
+                                    kugoMusicPoint_httpdlrate = 100;
+                                }else if( retList[j].nrtday_httpdlrate >= 4800&& retList[j].nrtday_httpdlrate < 6000 ){
+                                    kugoMusicPoint_httpdlrate = 90 + ( retList[j].nrtday_httpdlrate - 4800 )/120;
+                                }else if( retList[j].nrtday_httpdlrate >= 1200&& retList[j].nrtday_httpdlrate < 4800 ){
+                                    kugoMusicPoint_httpdlrate = 80 + ( retList[j].nrtday_httpdlrate - 1200 )/360;
+                                }else if( retList[j].nrtday_httpdlrate >= 240&& retList[j].nrtday_httpdlrate < 1200 ){
+                                    kugoMusicPoint_httpdlrate = 60 + ( retList[j].nrtday_httpdlrate - 240)/48;
+                                }else if( retList[j].nrtday_httpdlrate >= 80&& retList[j].nrtday_httpdlrate < 240 ){
+                                    kugoMusicPoint_httpdlrate = 40 + ( retList[j].nrtday_httpdlrate - 80)/8;
+                                }else{
+                                    kugoMusicPoint_httpdlrate = 0;
+                                }
+                                kugoMusicPoint = kugoMusicPoint_httpsuccrate*0.4 + kugoMusicPoint_httpavgresptime*0.3 + kugoMusicPoint_httpdlrate*0.3;
+                            }
+                        }
+                        if( readPoint && readPoint != ''){
+                            $("#readPoint").html(readPoint.toFixed(0));
+                        }else{
+                            $("#readPoint").html('');
+                        }
+                        if( cartoonPoint && cartoonPoint != ''){
+                            $("#cartoonPoint").html(cartoonPoint.toFixed(0));
+                        }else{
+                            $("#cartoonPoint").html('');
+                        }
+                        if( gamePoint && gamePoint != ''){
+                            $("#gamePoint").html(gamePoint.toFixed(0));
+                        }else{
+                            $("#gamePoint").html('');
+                        }
+                        if( musicPoint && musicPoint != ''){
+                            $("#musicPoint").html(musicPoint.toFixed(0));
+                        }else{
+                            $("#musicPoint").html('');
+                        }
+                        if( lingxiPoint && lingxiPoint != ''){
+                            $("#lingxiPoint").html(lingxiPoint.toFixed(0));
+                        }else{
+                            $("#lingxiPoint").html('');
+                        }
+                        if( videoPoint && videoPoint != ''){
+                            $("#videoPoint").html(videoPoint.toFixed(0));
+                        }else{
+                            $("#videoPoint").html('');
+                        }
+                        if( iReaderPoint && iReaderPoint != ''){
+                            $("#iReaderPoint").html(iReaderPoint.toFixed(0));
+                        }else{
+                            $("#iReaderPoint").html('');
+                        }
+                        if( lazierPoint && lazierPoint != ''){
+                            $("#lazierPoint").html(lazierPoint.toFixed(0));
+                        }else{
+                            $("#lazierPoint").html('');
+                        }
+                        if( liReaderPoint && liReaderPoint != ''){
+                            $("#liReaderPoint").html(iReaderPoint.toFixed(0));
+                        }else{
+                            $("#liReaderPoint").html('');
+                        }
+                        if( llazierPoint && llazierPoint != ''){
+                            $("#llazierPoint").html(lazierPoint.toFixed(0));
+                        }else{
+                            $("#llazierPoint").html('');
+                        }
+                        if( quickCartoonPoint && quickCartoonPoint != ''){
+                            $("#quickCartoonPoint").html(quickCartoonPoint.toFixed(0));
+                        }else{
+                            $("#quickCartoonPoint").html('');
+                        }
+                        if( theFirstNamePoint && theFirstNamePoint != ''){
+                            $("#theFirstPoint").html(theFirstNamePoint.toFixed(0));
+                        }else{
+                            $("#theFirstPoint").html('');
+                        }
+                        if( huyaTVPoint && huyaTVPoint != ''){
+                            $("#huyaTVPoint").html(huyaTVPoint.toFixed(0));
+                        }else{
+                            $("#huyaTVPoint").html('');
+                        }
+                        if( pandaTVPoint && pandaTVPoint != ''){
+                            $("#pandaTVPoint").html(pandaTVPoint.toFixed(0));
+                        }else{
+                            $("#pandaTVPoint").html('');
+                        }
+                        if( QQMusicPoint && QQMusicPoint != ''){
+                            $("#QQMusicPoint").html(QQMusicPoint.toFixed(0));
+                        }else{
+                            $("#QQMusicPoint").html('');
+                        }
+                        if( kugoMusicPoint && kugoMusicPoint != ''){
+                            $("#kugoMusicPoint").html(kugoMusicPoint.toFixed(0));
+                        }else{
+                            $("#kugoMusicPoint").html('');
+                        }
+                    }
+                }
+            });
+        });
+    });
+    function doSearch() {
+        aSearch();
+    }
+    function doClear() {
+        $('#sname').val('');
+        doSearch();
+    }
+    // 新增数据
+    function doAdd(value) {//alert($('#studentForm').serializeJson());
+
+        // 验证表单
+        var validate = $('#studentForm').form('validate');
+        if(!validate) {
+            return false;
+        }
+        $.ajax({
+            url: '{{projcfg.appurl}}/api/demo/student',
+            type: 'post',
+            data: $('#studentForm').serializeJson(),
+            success: function (data) {
+                if(data.success) {
+                    msgSuccess(data.msg);
+                    closeDialog();
+                    doSearch();
+                }
+                else {
+                    msgError(data.msg+',错误代码:'+data.code);
+                }
+            }
+        });
+    }
+
+    // 打开修改页面
+    function toEdit() {
+
+        // 获得选择行
+        var rows = $('#simpledatatable').datagrid('getChecked');
+        if (rows.length != 1) {
+            msgError('提示,请选择一条数据再进行修改');
+            return false;
+        }
+        var id = rows[0]._id;
+        openPage("修改数据", id, doEdit);
+        // 获取远程数据
+        $.ajax({
+            url: '{{projcfg.appurl}}/api/demo/student/'+id,
+            type: 'get',
+            data: {
+
+            }, success: function (data) {
+                if(data.success) {
+                    $('#studentForm').form('load',data.data[0]);
+                }
+                else {
+                    msgError(data.msg+',错误代码:'+data.code);
+                }
+            }
+        });
+    }
+    // 修改数据
+    function doEdit(value) {
+
+        // 验证表单
+        var validate = $('#studentForm').form('validate');
+        if(!validate) {
+            return false;
+        }
+
+        $.ajax({
+            url: '{{projcfg.appurl}}/api/demo/student/'+value,
+            type: 'put',
+            data: $('#studentForm').serializeJson(),
+            success: function (data) {
+                if(data.success) {
+                    msgSuccess(data.msg);
+                    closeDialog();
+                    doSearch();
+                    clear();
+                }
+                else {
+                    msgError(data.msg+',错误代码:'+data.code);
+                }
+            }
+        });
+    }
+    // 删除数据
+    function doDel() {
+
+        // 获得选择行
+        var rows = $('#simpledatatable').datagrid('getChecked');
+        if (rows.length != 1) {
+            msgError('提示,请选择一条数据再进行删除');
+            return false;
+        }
+        var id = rows[0]._id;
+
+        msgConfirm('确定删除此条记录？',function(result){
+            if(result){
+                // 获取远程数据
+                $.ajax({
+                    url: '{{projcfg.appurl}}/api/demo/student/'+id,
+                    type: 'delete',
+                    data: {
+                    },
+                    success: function (data) {
+                        if(data.success) {
+                            msgSuccess(data.msg);
+                            doSearch();
+                        }
+                        else {
+                            msgError(data.msg+',错误代码:'+data.code);
+                        }
+                    }
+                });
+            }
+        });
+    }
+    // 清空新增表单数据
+    function clear() {
+        $('#studentForm').form('clear');
+    }
+</script>

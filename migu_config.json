@@ -1,0 +1,16 @@
+
+{
+  "host": "117.187.18.28",
+  "port": "6002",
+  "method": "POST",
+  "path": "/mobileDevelopInt_nlj",
+  "Authorization": "9C528035DFBD2D389E0A81D5F85A1810",
+  "srvId": "wsSelfDevelopInterface.getSubAppQuality",
+  "authKey": "odc|odc!234",
+  "version": "v1.0",
+  "reqParams": {
+    "key":"2017/08/08 8:08"
+  }
+
+}
+

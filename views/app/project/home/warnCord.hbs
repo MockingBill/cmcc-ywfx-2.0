@@ -1,0 +1,244 @@
+
+<!--create bu dengqian-->
+<!--Flot Charts Needed Scripts-->
+<script src="{{projcfg.appurl}}/static/js/fontJquery/jquery.flot.js"></script>
+<script src="{{projcfg.appurl}}/static/js/fontJquery/jquery.flot.resize.js"></script>
+<script src="{{projcfg.appurl}}/static/js/fontJquery/jquery.flot.pie.js"></script>
+<script src="{{projcfg.appurl}}/static/js/fontJquery/jquery.flot.tooltip.js"></script>
+<script src="{{projcfg.appurl}}/static/js/fontJquery/jquery.flot.orderBars.js"></script>
+
+<style>
+    .mySpan {
+        font-size: large;
+        color: white;
+        font-weight: bold;
+        padding-left: 20px;
+        z-index:778;
+    }
+</style>
+<!--功能区-->
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-body">
+                <div id="cc" class="easyui-layout" data-options="fit:true,border:false"
+                     style="width:800px; height:580px;background-color: #fbfbfb;">
+                    <div data-options="region:'center',border:false" style="overflow-x:hidden;overflow-y:hidden">
+                        <div id="toolbar" class="row tbRow">
+                            <div class="col-xs-10 col-md-10">
+                                <form id="searchFrom" class="form-inline">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input class="easyui-combobox" value="地区选择"
+                                                   style="width: 130px;height:34px;"
+                                                   name="rt_bizcity" id="rt_bizcity"
+                                                   data-options='data:[{id:"贵州",text:"贵州"},
+                                                   {id:"贵阳",text:"贵阳"},
+                                                   {id:"遵义",text:"遵义"},
+                                                   {id:"贵安新区",text:"贵安新区"},
+                                                   {id:"安顺",text:"安顺"},
+                                                   {id:"都匀",text:"都匀"},
+                                                   {id:"凯里",text:"凯里"},
+                                                   {id:"铜仁",text:"铜仁"},
+                                                   {id:"毕节",text:"毕节"},
+                                                   {id:"六盘水",text:"六盘水"},
+                                                   {id:"兴义",text:"兴义"},],
+                                                   valueField: "id",
+                                                   textField: "text",
+                                                   panelWidth: 130,
+                                                   panelHeight: "auto",
+                                                   formatter: formatItem'>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input class="easyui-combobox" value="自有业务选择"
+                                                   style="width: 130px;height:34px;"
+                                                   name="ownRt_bizname" id="ownRt_bizname"
+                                                   data-options='data:[
+                                                   {id:"咪咕音乐",text:"咪咕音乐"},
+                                                   {id:"咪咕动漫",text:"咪咕动漫"},
+                                                   {id:"咪咕阅读",text:"咪咕阅读"},
+                                                   {id:"灵犀",text:"灵犀"},
+                                                   {id:"咪咕游戏",text:"咪咕游戏"},],
+                                                   valueField: "id",
+                                                   textField: "text",
+                                                   panelWidth: 130,
+                                                   panelHeight: "auto",
+                                                   formatter: formatItem
+                                                    '>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input class="easyui-datebox" id="queryDate" name="queryDate" value="查询日期"
+                                                   style="width: 130px;height:34px;"></input>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="col-xs-2 col-md-2 text-right">
+                                <form id="searchFrom" class="form-inline"  >
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="button"
+                                                                onclick="doSearch()"><i
+                                                                class="fa fa-search"></i>查询</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!--主显示页面 easyUI dataGrid-->
+                        <table id="simpledatatable"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--功能区结束-->
+
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#simpledatatable').datagrid('reload',getViewData());
+        },0);
+        $(function () {
+            //数据表格加载
+            $('#simpledatatable').datagrid({
+                url:'{{projcfg.appurl}}/api/home/home_route/listWarnCord',
+                method:'get',
+                title:"告警记录",
+                height:500,
+                striped:true,
+                fitColumns:false,
+                border:true,
+                singleSelect:true,
+                selectOnCheck:false,
+                columns:[[
+                    {field: '_id', checkbox: true},
+                    {"field": "rt_bizname", "title": "业务名","width":150},
+                    {"field": "rt_starttime", "title": "告警时间","width":200,"formatter": function (value,row,index) {
+                        return value.substr(0,4)+"-"+value.substr(4,2)+"-"+value.substr(6,2)+" "+value.substr(8,2)+":"+value.substr(10,2);
+                    }},
+                    {"field": "rt_bizcity", "title": "地区","width":150 },
+                    {"field": "rt_httpavgresptime", "title": "告警指标" ,"width":520,"formatter": function (value,row,index) {
+                        var s="";
+                        if(Number(row.rt_httpsuccrate) < 80)
+                            s=s+ "访问成功率:"+"<font color='#fb2e17'>" + row.rt_httpsuccrate + "%</font>"+"\n";
+                        if(Number(row.rt_httpavgresptime)>=500)
+                            s=s+ "响应延时:"+"<font color='#fb2e17'>" + row.rt_httpavgresptime + "ms</font>"+"\n";
+                        if(Number(row.rt_httpdlrate) < 100)
+                            s=s+ "下行速率:"+"<font color='#fb2e17'>" + row.rt_httpdlrate + "kbps</font>"+"\n";
+                        return s;
+                    }}
+                ]],
+                onDblClickRow:function(rowIndex, rowData){
+                    alert(rowData.warnText);
+                },
+                onLoadSuccess:function(json) {
+                    if(!json.success) {
+                        msgError(json.msg);
+                    }
+                },
+                onLoadError:function() {
+                    msgError('加载数据出现时发生错误,请稍候重试...');
+                },
+                pagination:true,
+                loadMsg:'正在加载...'
+            });
+            var role_code = '{{currentUserRole.role_code}}';
+            var org_code = '{{currentUser.user_org.org_code}}';
+            var login_account = '{{currentUser.login_account}}';
+
+            if (org_code != "000102" && login_account != "yangruofan") {
+                if (role_code == "001" || role_code == "sysadmin" || role_code == "002" || role_code == "005" || role_code == "007") {
+                    $('#org_codeSelectDiv').show();
+                } else {
+                    $('#org_codeSelectDiv').hide();
+                    $('#activeCss').css({
+                        "margin-left": "150px"
+                    });
+                }
+            } else {
+                $('#org_codeSelectDiv').show();
+            }
+
+        });
+    });
+
+</script>
+
+<script>
+    /**
+     * 获取用户在页面选择的比较条件，当条件不足时将使用默认条件
+     * @param dataType
+     * @returns rt_bizcity: jQuery, ownRt_bizname: jQuery: jQuery, queryDate: jQuery, dataType:
+     */
+    function getViewData() {
+        var rt_bizcity = $('#rt_bizcity').combobox('getValue');
+        var ownRt_bizname = $('#ownRt_bizname').combobox('getValue');
+        var queryDate = $('#queryDate').combobox('getValue');
+        if (rt_bizcity == "地区选择") {
+            rt_bizcity = "贵州";
+        }
+        if (ownRt_bizname == "自有业务选择") {
+            ownRt_bizname = "咪咕阅读";
+        }
+        var date = new Date();
+        var ss = date.getFullYear() + "-" + (date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)) + "-" + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
+        if (queryDate == ss) {
+            queryDate = '2017-12-20';//设置查询时间
+        }
+        var obj = {
+            rt_bizcity: rt_bizcity,
+            ownRt_bizname: ownRt_bizname,
+            queryDate: queryDate
+        };
+        return obj;
+    }
+
+
+
+    function doSearch() {
+        $('#simpledatatable').datagrid('reload',getViewData());
+    }
+
+
+</script>
+
+<script>
+
+
+    function formatItem(row) {
+        //下拉列表类型选择
+        var a = ["label label-default",
+            "label label-primary",
+            "label label-info",
+            "label label-success",
+            "label label-danger",
+            "label label-warning",
+            "label label-sky",
+            "label label-blueberry",
+            "label label-yellow",
+            "label label-darkorange",
+            "label label-magenta",
+            "label label-purple",
+            "label label-maroon",
+            "label label-darkpink",
+            "label label-pink",
+            "label label-azure",
+            "label label-orange"];
+        var n = Math.floor(Math.random() * 17);
+        var s = '<span class="' + a[n] + '">' + row.text + '</span>';
+        return s;
+    }
+
+
+
+
+</script>>
